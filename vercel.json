@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/eurozuca.html",
+      "permanent": false
+    }
+  ]
+}
