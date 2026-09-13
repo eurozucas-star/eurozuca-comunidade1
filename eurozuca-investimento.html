@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eurozuca Investimentos | Patrimônio no Brasil para Brasileiros na Europa</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --green:#00a651; --green-light:#e8f5e9; --green-glow:rgba(0,166,81,.15);
+  --gold:#d4af37; --gold-light:#faf3d7; --gold-glow:rgba(212,175,55,.2);
+  --blue:#003399; --blue-dark:#001a5c; --blue-light:#e3f2fd;
+  --navy:#071d4d;
+  --bg:#ffffff; --bg-gray:#f5f5f5;
+  --text:#1a1a1a; --text-sec:#616161; --text-muted:#9e9e9e;
+  --border:#e8e8e8;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:0 4px 12px rgba(0,0,0,.1);
+  --shadow-lg:0 8px 30px rgba(0,0,0,.12);
+  --grad-border:linear-gradient(135deg,var(--green),var(--gold),var(--blue));
+  --font-body:'Inter',sans-serif; --font-display:'Space Grotesk',sans-serif;
+}
+body{font-family:var(--font-body);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none}
+img{max-width:100%}
+
+/* ===== NAV ===== */
+.ez-nav{position:fixed;top:0;width:100%;z-index:1000;padding:1rem 5%;background:transparent;transition:all .3s}
+.ez-nav.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:.7rem 5%;box-shadow:var(--shadow-sm)}
+.ez-nav-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.ez-logo{font-family:var(--font-display);font-size:1.4rem;font-weight:600;color:var(--text);display:flex;align-items:center;gap:.6rem}
+.ez-logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--green),#00c853);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;position:relative}
+.ez-logo-icon::after{content:'';position:absolute;inset:-2px;border-radius:12px;padding:2px;background:var(--grad-border);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.6}
+.ez-logo-sub{font-size:.62rem;color:var(--text-muted);font-weight:500;display:block;line-height:1;margin-top:2px}
+.ez-nav-links{display:flex;gap:1.6rem;list-style:none}
+.ez-nav-links a{color:var(--text-sec);font-size:.88rem;font-weight:500;transition:color .3s;position:relative}
+.ez-nav-links a:hover{color:var(--green)}
+.ez-nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--grad-border);transition:width .3s}
+.ez-nav-links a:hover::after{width:100%}
+.ez-nav-links a.active{color:var(--green)}
+.ez-nav-links a.active::after{width:100%}
+.ez-btn{padding:.9rem 1.8rem;border-radius:50px;font-weight:600;font-size:.9rem;display:inline-flex;align-items:center;gap:.5rem;transition:all .3s;cursor:pointer;border:2px solid transparent;position:relative;background-clip:padding-box;font-family:inherit}
+.ez-btn::before{content:'';position:absolute;inset:-2px;border-radius:50px;padding:2px;background:var(--grad-border);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.8;transition:opacity .3s}
+.ez-btn i{position:relative;z-index:1}
+.ez-btn span,.ez-btn{position:relative;z-index:1}
+.ez-btn-green{background:linear-gradient(135deg,var(--green),#00c853);color:#fff}
+.ez-btn-green:hover{transform:translateY(-2px);box-shadow:0 8px 25px var(--green-glow)}
+.ez-btn-outline{background:transparent;color:var(--text)}
+.ez-btn-outline:hover{color:var(--gold)}
+.ez-btn-sm{padding:.55rem 1.3rem;font-size:.82rem}
+.ez-menu-btn{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--text)}
+.ez-mobile-menu{position:fixed;top:0;right:-100%;width:80%;max-width:300px;height:100vh;background:rgba(255,255,255,.98);backdrop-filter:blur(20px);z-index:1001;padding:5rem 1.5rem 1.5rem;transition:right .3s;border-left:1px solid var(--border)}
+.ez-mobile-menu.open{right:0}
+.ez-mobile-menu a{display:block;color:var(--text-sec);padding:.9rem 0;font-size:1rem;border-bottom:1px solid var(--border)}
+.ez-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:1000;opacity:0;visibility:hidden;transition:all .3s}
+.ez-overlay.active{opacity:1;visibility:visible}
+
+/* ===== HERO ===== */
+.ez-hero{min-height:100vh;display:flex;align-items:center;padding:8rem 5% 4rem;background:linear-gradient(180deg,var(--bg) 0%,var(--bg-gray) 100%)}
+.ez-hero-inner{max-width:1400px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:4rem;align-items:center}
+.ez-badge{display:inline-flex;align-items:center;gap:.5rem;background:#fff;border:1px solid var(--border);color:var(--text-sec);padding:.45rem 1.2rem;border-radius:50px;font-size:.78rem;font-weight:500;margin-bottom:1.4rem;box-shadow:var(--shadow-sm)}
+.ez-badge i{color:var(--gold)}
+.ez-hero h1{font-family:var(--font-display);font-size:3.2rem;font-weight:700;line-height:1.12;margin-bottom:1.2rem;letter-spacing:-.03em}
+.ez-hero h1 .line2{background:var(--grad-border);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.ez-hero p{font-size:1.08rem;color:var(--text-sec);margin-bottom:1.8rem;max-width:520px;line-height:1.7}
+.ez-hero-btns{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:1.6rem}
+.ez-hero-points{display:flex;flex-wrap:wrap;gap:.6rem}
+.ez-hero-points span{background:#fff;border:1px solid var(--border);padding:.4rem .9rem;border-radius:50px;font-size:.76rem;color:var(--text-sec);box-shadow:var(--shadow-sm)}
+.ez-hero-points span i{color:var(--green);margin-right:.3rem;font-size:.68rem}
+
+/* hero side card */
+.ez-hero-card{background:#fff;border:2px solid transparent;background-clip:padding-box;position:relative;border-radius:24px;padding:2.4rem 2.2rem;box-shadow:var(--shadow-lg)}
+.ez-hero-card::before{content:'';position:absolute;inset:-2px;border-radius:26px;padding:2px;background:var(--grad-border);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.6;pointer-events:none}
+.ez-hero-card .hk{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);font-weight:700}
+.ez-hero-card .big{font-family:var(--font-display);font-size:4.2rem;font-weight:700;background:var(--grad-border);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1;margin:.4rem 0 .2rem}
+.ez-hero-card .per{color:var(--text-sec);font-weight:600;margin-bottom:1.2rem}
+.ez-hero-card ul{list-style:none;margin-bottom:1.6rem}
+.ez-hero-card li{display:flex;align-items:flex-start;gap:.6rem;padding:.45rem 0;font-size:.85rem;color:var(--text-sec);border-bottom:1px solid #f0f0f0}
+.ez-hero-card li:last-child{border-bottom:none}
+.ez-hero-card li i{color:var(--green);font-size:.65rem;margin-top:.35rem}
+
+/* ===== SECTIONS ===== */
+.ez-section{padding:5rem 5%}
+.ez-bg-gray{background:var(--bg-gray)}
+.ez-sec-header{max-width:1200px;margin:0 auto 3rem;text-align:center}
+.ez-sec-tag{display:inline-block;background:var(--gold-light);color:var(--gold);padding:.35rem 1rem;border-radius:50px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:1rem}
+.ez-sec-title{font-family:var(--font-display);font-size:2.3rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem}
+.ez-sec-title span{color:var(--green)}
+.ez-sec-sub{color:var(--text-sec);font-size:1.02rem;max-width:640px;margin:0 auto}
+
+/* gradient card base */
+.ez-gcard{background:#fff;border:2px solid transparent;background-clip:padding-box;position:relative;box-shadow:var(--shadow-sm);transition:all .35s}
+.ez-gcard::before{content:'';position:absolute;inset:-2px;border-radius:inherit;padding:2px;background:var(--grad-border);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.35;transition:opacity .3s;pointer-events:none}
+.ez-gcard:hover::before{opacity:.7}
+.ez-gcard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+
+/* ===== COUNTDOWN (navy) ===== */
+.ez-dark{background:linear-gradient(135deg,var(--blue) 0%,var(--navy) 100%);color:#fff}
+.ez-dark .ez-sec-title{color:#fff}
+.ez-dark .ez-sec-sub{color:rgba(255,255,255,.75)}
+.ez-dark .ez-sec-tag{background:rgba(212,175,55,.15);color:var(--gold)}
+.ez-count{max-width:760px;margin:2.5rem auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.ez-count-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:1.6rem .8rem;text-align:center}
+.ez-count-card b{display:block;font-family:var(--font-display);font-size:2.8rem;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums;line-height:1}
+.ez-count-card small{color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.1em;font-size:.7rem}
+
+/* ===== CARDS 3-col ===== */
+.ez-cards{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.ez-card{border-radius:20px;padding:2rem}
+.ez-cicon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.2rem}
+.ez-cicon.g{background:var(--green-light);color:var(--green)}
+.ez-cicon.y{background:var(--gold-light);color:var(--gold)}
+.ez-cicon.b{background:var(--blue-light);color:var(--blue)}
+.ez-card h3{font-family:var(--font-display);font-size:1.15rem;font-weight:600;margin-bottom:.6rem;position:relative;z-index:1}
+.ez-card p{color:var(--text-sec);font-size:.9rem;line-height:1.65;position:relative;z-index:1}
+
+/* ===== STEPS LADDER ===== */
+.ez-ladder{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:.9rem}
+.ez-rung{background:#fff;border-radius:16px;padding:1.3rem 1.8rem;display:flex;align-items:center;gap:1.4rem;box-shadow:var(--shadow-sm);position:relative;border:2px solid transparent;background-clip:padding-box;transition:all .3s}
+.ez-rung::before{content:'';position:absolute;inset:-2px;border-radius:18px;padding:2px;background:var(--grad-border);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.3;transition:opacity .3s;pointer-events:none}
+.ez-rung:hover::before{opacity:.65}
+.ez-rung:hover{transform:translateX(8px);box-shadow:var(--shadow-md)}
+.ez-rung .n{width:46px;height:46px;border-radius:14px;background:var(--green-light);color:var(--green);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;flex-shrink:0;position:relative;z-index:1}
+.ez-rung:nth-child(2) .n{background:var(--gold-light);color:var(--gold)}
+.ez-rung:nth-child(3) .n{background:var(--blue-light);color:var(--blue)}
+.ez-rung:nth-child(4) .n{background:var(--green-light);color:var(--green)}
+.ez-rung:nth-child(5) .n{background:var(--gold-light);color:var(--gold)}
+.ez-rung h4{font-family:var(--font-display);font-size:1.02rem;font-weight:600;position:relative;z-index:1}
+.ez-rung p{font-size:.83rem;color:var(--text-sec);position:relative;z-index:1}
+
+/* checklist dark */
+.ez-checks{max-width:900px;margin:2.5rem auto 0;display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem}
+.ez-checks li{list-style:none;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:1rem 1.4rem;font-size:.9rem;color:rgba(255,255,255,.9)}
+.ez-checks li i{color:var(--gold);margin-right:.6rem}
+
+/* price */
+.ez-price-card{max-width:520px;margin:2.5rem auto 0;border-radius:24px;padding:2.8rem 2.4rem;text-align:center}
+.ez-price-card .from{color:var(--text-muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.14em;font-weight:700}
+.ez-price-card .val{font-family:var(--font-display);font-size:4.4rem;font-weight:700;background:var(--grad-border);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1;margin:.3rem 0}
+.ez-price-card .per{color:var(--blue);font-weight:700;margin-bottom:1rem}
+.ez-price-card p{color:var(--text-sec);font-size:.92rem;position:relative;z-index:1}
+
+/* method rail */
+.ez-rail{display:flex;gap:1.1rem;overflow-x:auto;padding:1.5rem 4px 1.2rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;max-width:1200px;margin:0 auto}
+.ez-rail::-webkit-scrollbar{height:8px}
+.ez-rail::-webkit-scrollbar-thumb{background:var(--blue);border-radius:8px}
+.ez-mcard{min-width:250px;scroll-snap-align:start;background:#fff;border-radius:18px;padding:1.6rem 1.4rem;border-top:5px solid var(--gold);box-shadow:var(--shadow-md);position:relative;border-left:2px solid transparent;border-right:2px solid transparent;border-bottom:2px solid transparent;background-clip:padding-box}
+.ez-mcard:nth-child(odd){border-top-color:var(--green)}
+.ez-mcard:nth-child(3n){border-top-color:var(--blue)}
+.ez-mcard .num{font-family:var(--font-display);font-size:1.9rem;font-weight:700;color:#e2e2e2}
+.ez-mcard h3{font-family:var(--font-display);font-size:1rem;margin:.5rem 0 .4rem}
+.ez-mcard p{color:var(--text-sec);font-size:.83rem}
+.ez-rail-hint{text-align:center;color:var(--text-muted);font-size:.8rem;max-width:1200px;margin:0 auto}
+
+/* FAQ */
+.ez-faq{max-width:780px;margin:0 auto}
+.ez-faq details{background:#fff;border-radius:16px;margin-bottom:.8rem;overflow:hidden;position:relative;border:2px solid transparent;background-clip:padding-box;box-shadow:var(--shadow-sm)}
+.ez-faq details::before{content:'';position:absolute;inset:-2px;border-radius:18px;padding:2px;background:var(--grad-border);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.25;pointer-events:none}
+.ez-faq summary{cursor:pointer;list-style:none;padding:1.2rem 1.5rem;font-weight:600;font-family:var(--font-display);display:flex;justify-content:space-between;align-items:center;gap:1rem;position:relative;z-index:1}
+.ez-faq summary::after{content:"+";color:var(--green);font-size:1.4rem;font-weight:700}
+.ez-faq details[open] summary::after{content:"–"}
+.ez-faq details p{padding:0 1.5rem 1.3rem;color:var(--text-sec);font-size:.9rem;position:relative;z-index:1}
+
+/* final form */
+.ez-form-wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.ez-form-wrap .lead{color:rgba(255,255,255,.8);font-size:1.02rem;margin-bottom:1rem}
+.ez-form-card{background:#fff;border-radius:24px;padding:2.4rem 2.2rem;box-shadow:var(--shadow-lg)}
+.ez-form-card h3{font-family:var(--font-display);margin-bottom:.4rem}
+.ez-form-card>p{color:var(--text-sec);font-size:.85rem;margin-bottom:1.4rem}
+.ez-field{margin-bottom:.9rem}
+.ez-field label{display:block;font-size:.78rem;font-weight:600;color:var(--text);margin-bottom:.35rem}
+.ez-field input,.ez-field select{width:100%;padding:.85rem 1rem;border:1.5px solid var(--border);border-radius:12px;font-size:.92rem;background:var(--bg-gray);outline:none;font-family:inherit;transition:.2s}
+.ez-field input:focus,.ez-field select:focus{border-color:var(--green);background:#fff;box-shadow:0 0 0 3px var(--green-glow)}
+.ez-form-card .ez-btn{width:100%;justify-content:center}
+.ez-form-note{font-size:.72rem;color:var(--text-muted);margin-top:.9rem;text-align:center}
+
+/* footer */
+.ez-footer{border-top:1px solid var(--border);padding:3rem 5% 1.5rem;background:var(--bg-gray)}
+.ez-footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1.4fr;gap:3rem;margin-bottom:2rem}
+.ez-footer-brand p{color:var(--text-muted);font-size:.85rem;line-height:1.65;margin-top:1rem}
+.ez-footer-socials{display:flex;gap:.7rem;margin-top:1.2rem}
+.ez-footer-social{width:38px;height:38px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--text-sec);box-shadow:var(--shadow-sm);transition:all .3s}
+.ez-footer-social:hover{background:linear-gradient(135deg,var(--green),#00c853);color:#fff;transform:translateY(-2px)}
+.ez-fcol h4{font-family:var(--font-display);font-size:.88rem;font-weight:600;margin-bottom:1rem}
+.ez-fcol a{display:block;color:var(--text-muted);font-size:.83rem;padding:.28rem 0}
+.ez-fcol a:hover{color:var(--green)}
+.ez-footer-contact{display:flex;flex-direction:column;gap:.7rem}
+.ez-footer-contact-item{display:flex;align-items:center;gap:.7rem;font-size:.83rem;color:var(--text-muted)}
+.ez-footer-contact-item i{color:var(--green);width:16px}
+.ez-fbottom{max-width:1200px;margin:0 auto;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.ez-fbottom p{color:var(--text-muted);font-size:.78rem}
+
+/* WhatsApp float */
+.ez-wa{position:fixed;bottom:24px;right:24px;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;padding:.8rem 1.5rem;border-radius:50px;font-size:.88rem;font-weight:600;display:flex;align-items:center;gap:.6rem;box-shadow:0 8px 25px rgba(37,211,102,.4);z-index:100;border:none;font-family:inherit;transition:all .3s}
+.ez-wa:hover{transform:scale(1.05)}
+
+/* ===== Consultor Virtual (fab + panel) ===== */
+.agent-wrap{position:fixed;right:24px;bottom:96px;z-index:101;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.agent-callout{display:flex;align-items:center;gap:10px;pointer-events:none;animation:fadeIn .4s}
+.agent-callout .bubble{background:rgba(7,29,77,.9);border:1px solid rgba(212,175,55,.45);border-radius:14px;padding:10px 16px;backdrop-filter:blur(6px);box-shadow:0 10px 30px rgba(7,29,77,.35)}
+.agent-callout .bubble p{color:#f3ecdc;font-size:.78rem;line-height:1.35}
+.agent-callout .bubble p b{color:var(--gold)}
+.agent-callout .arrow{color:var(--gold);font-size:1.3rem;transform:rotate(45deg)}
+@media(max-width:640px){.agent-callout{display:none}}
+.agent-fab{width:64px;height:64px;border-radius:50%;border:none;cursor:pointer;background:radial-gradient(circle at 30% 30%,#16367e,var(--navy));display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 12px 32px rgba(7,29,77,.5);transition:transform .3s;animation:holoFloat 3.5s ease-in-out infinite}
+.agent-fab:hover{transform:scale(1.1)}
+.agent-fab .mark{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--green),#00c853);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.15rem;font-weight:700;font-family:var(--font-display)}
+.agent-fab::before{content:"";position:absolute;inset:-5px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 70%,rgba(212,175,55,.9) 85%,transparent 100%);animation:holoSpin 3s linear infinite;-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px));mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px))}
+@keyframes holoSpin{to{transform:rotate(360deg)}}
+@keyframes holoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.agent-panel{position:fixed;right:12px;bottom:176px;z-index:102;width:min(26rem,calc(100vw - 24px));height:min(70vh,600px);background:var(--navy);border:1px solid rgba(212,175,55,.3);border-radius:16px;display:none;flex-direction:column;overflow:hidden;box-shadow:0 24px 80px rgba(7,29,77,.55);color:#f3ecdc}
+.agent-panel.open{display:flex;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
+.agent-head{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid rgba(243,236,220,.1);background:rgba(255,255,255,.02)}
+.agent-head .avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--green),#00c853);display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:700;color:var(--gold);flex-shrink:0;box-shadow:0 0 0 2px rgba(212,175,55,.35)}
+.agent-head .t1{font-weight:700;font-size:.95rem;color:#f3ecdc}
+.agent-head .t2{font-size:.72rem;color:rgba(243,236,220,.55)}
+.agent-close{margin-left:auto;background:rgba(243,236,220,.08);border:none;color:#f3ecdc;width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:.9rem;transition:.2s}
+.agent-close:hover{background:rgba(243,236,220,.18)}
+.agent-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin;scrollbar-color:rgba(212,175,55,.3) transparent}
+.agent-body::-webkit-scrollbar{width:6px}
+.agent-body::-webkit-scrollbar-thumb{background:rgba(212,175,55,.25);border-radius:6px}
+.msg{max-width:85%;padding:10px 14px;font-size:.88rem;line-height:1.55;white-space:pre-wrap;animation:msgIn .25s;border-radius:10px}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.msg.bot{background:rgba(243,236,220,.08);color:rgba(243,236,220,.92);border:1px solid rgba(243,236,220,.1);align-self:flex-start}
+.msg.user{background:var(--gold);color:var(--navy);font-weight:600;align-self:flex-end}
+.achips{display:flex;flex-wrap:wrap;gap:8px;align-self:flex-start;max-width:95%;animation:msgIn .3s}
+.achip{background:transparent;border:1px solid rgba(212,175,55,.5);color:var(--gold);border-radius:18px;padding:7px 13px;font-size:.78rem;font-weight:600;cursor:pointer;transition:.15s;font-family:inherit}
+.achip:hover{background:var(--gold);color:var(--navy)}
+.typing{display:inline-flex;gap:4px;padding:12px 14px}
+.typing i{width:6px;height:6px;border-radius:50%;background:rgba(243,236,220,.4);animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
+.agent-foot{border-top:1px solid rgba(243,236,220,.1);padding:12px;display:flex;align-items:flex-end;gap:10px}
+.agent-foot textarea{flex:1;max-height:112px;min-height:44px;resize:none;background:rgba(7,29,77,.6);border:1px solid rgba(243,236,220,.15);border-radius:10px;padding:11px 13px;color:#f3ecdc;font-size:.9rem;font-family:inherit;outline:none;transition:.2s}
+.agent-foot textarea::placeholder{color:rgba(243,236,220,.4)}
+.agent-foot textarea:focus{border-color:rgba(212,175,55,.6)}
+.agent-send{width:44px;height:44px;flex-shrink:0;border:none;border-radius:10px;background:var(--gold);color:var(--navy);font-size:1rem;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center}
+.agent-send:hover{filter:brightness(1.08)}
+.agent-send:disabled{opacity:.4;cursor:default}
+
+/* ===== Quiz ===== */
+.quiz-overlay{position:fixed;inset:0;background:rgba(7,29,77,.75);backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;padding:16px}
+.quiz-overlay.open{display:flex}
+.quiz-card{background:#fff;border-radius:20px;width:min(480px,100%);overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.45);animation:quizIn .3s}
+@keyframes quizIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+.quiz-top{background:linear-gradient(135deg,var(--blue),var(--navy));color:#fff;padding:22px 26px;position:relative}
+.quiz-top h3{font-family:var(--font-display);font-size:1.25rem}
+.quiz-top p{color:#c6d3ec;font-size:.82rem;margin-top:4px}
+.quiz-x{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.14);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:.9rem}
+.quiz-progress{display:flex;gap:6px;padding:18px 26px 0}
+.quiz-progress i{flex:1;height:5px;border-radius:4px;background:#e4eaf4;transition:.3s}
+.quiz-progress i.done{background:var(--green)}
+.quiz-step-label{font-size:.72rem;color:var(--text-muted);padding:8px 26px 0;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+.quiz-body{padding:14px 26px 6px;min-height:190px}
+.quiz-body h4{font-family:var(--font-display);color:var(--text);font-size:1.08rem;margin-bottom:16px}
+.quiz-input{width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:12px;font-size:1rem;outline:none;background:var(--bg-gray);font-family:inherit;transition:.2s}
+.quiz-input:focus{border-color:var(--green);background:#fff;box-shadow:0 0 0 3px var(--green-glow)}
+.quiz-opts{display:grid;gap:10px}
+.quiz-opt{border:1.5px solid var(--border);background:#fff;border-radius:12px;padding:13px 16px;font-size:.95rem;font-weight:600;color:var(--text);cursor:pointer;text-align:left;transition:.15s;font-family:inherit}
+.quiz-opt:hover{border-color:var(--green)}
+.quiz-opt.sel{border-color:var(--green);background:var(--green-light)}
+.quiz-err{color:#d33;font-size:.8rem;min-height:20px;padding:4px 26px 0}
+.quiz-foot{display:flex;gap:10px;padding:8px 26px 24px}
+.quiz-back{background:#fff;border:1.5px solid var(--border);color:var(--text);border-radius:30px;padding:12px 20px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem}
+.quiz-back:hover{border-color:var(--blue)}
+.quiz-next{flex:1;background:linear-gradient(135deg,var(--green),#00c853);color:#fff;border:none;border-radius:30px;padding:12px 20px;font-weight:700;font-size:1rem;cursor:pointer;font-family:inherit;transition:.2s}
+.quiz-next:hover{transform:translateY(-1px);box-shadow:0 8px 25px var(--green-glow)}
+.quiz-done{text-align:center;padding:6px 0}
+.quiz-done .check{width:74px;height:74px;border-radius:50%;background:var(--green);color:#fff;font-size:2.2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 12px 30px rgba(0,166,81,.4)}
+.quiz-done h4{font-family:var(--font-display);font-size:1.3rem;margin-bottom:8px}
+.quiz-done p{color:var(--text-sec);font-size:.9rem;margin-bottom:14px}
+.quiz-wa{display:inline-block;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;font-weight:700;padding:14px 28px;border-radius:30px;margin-bottom:12px;transition:.2s}
+.quiz-wa:hover{transform:translateY(-2px)}
+.quiz-note{font-size:.75rem;color:var(--text-muted)}
+
+/* responsive */
+@media(max-width:1024px){
+  .ez-hero-inner{grid-template-columns:1fr;gap:2.5rem}
+  .ez-hero h1{font-size:2.6rem}
+  .ez-cards{grid-template-columns:repeat(2,1fr)}
+  .ez-form-wrap{grid-template-columns:1fr}
+  .ez-footer-inner{grid-template-columns:1fr 1fr}
+  .ez-nav-links{display:none}
+  .ez-menu-btn{display:block}
+  .ez-nav .ez-btn{display:none}
+}
+@media(max-width:768px){
+  .ez-hero{padding:6.5rem 5% 3rem;min-height:auto}
+  .ez-hero h1{font-size:2rem}
+  .ez-sec-title{font-size:1.7rem}
+  .ez-cards,.ez-checks{grid-template-columns:1fr}
+  .ez-count{grid-template-columns:repeat(2,1fr)}
+  .ez-section{padding:3.5rem 5%}
+  .ez-footer-inner{grid-template-columns:1fr}
+  .ez-fbottom{flex-direction:column;text-align:center}
+  .agent-panel{bottom:170px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="ez-nav" id="ezNav">
+  <div class="ez-nav-inner">
+    <a href="eurozuca.html" class="ez-logo">
+      <span class="ez-logo-icon"><i class="fas fa-chart-line"></i></span>
+      <span>eurozuca.com<span class="ez-logo-sub">Investimentos</span></span>
+    </a>
+    <ul class="ez-nav-links">
+      <li><a href="eurozuca.html">Início</a></li>
+      <li><a href="eurozuca.html#documentos">Documentos</a></li>
+      <li><a href="eurozuca.html#servicos">Serviços</a></li>
+      <li><a href="eurozuca-investimento.html" class="active">Investimentos</a></li>
+      <li><a href="eurozuca-comunidade.html">Comunidade</a></li>
+    </ul>
+    <a href="#" class="ez-btn ez-btn-green ez-btn-sm" onclick="openQuiz(event)"><i class="fas fa-gift"></i> Análise Gratuita</a>
+    <button class="ez-menu-btn" onclick="ezToggleMenu()" aria-label="Menu"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+<div class="ez-overlay" id="ezOverlay" onclick="ezToggleMenu()"></div>
+<div class="ez-mobile-menu" id="ezMobileMenu">
+  <button onclick="ezToggleMenu()" style="position:absolute;top:1.2rem;right:1.2rem;background:none;border:none;font-size:1.4rem;cursor:pointer;"><i class="fas fa-times"></i></button>
+  <a href="eurozuca.html">Início</a>
+  <a href="eurozuca.html#documentos">Documentos</a>
+  <a href="eurozuca.html#servicos">Serviços</a>
+  <a href="eurozuca-investimento.html"><i class="fas fa-chart-line"></i> Investimentos</a>
+  <a href="eurozuca-comunidade.html">Comunidade</a>
+  <a href="#" onclick="ezToggleMenu();openQuiz(event)"><i class="fas fa-gift"></i> Análise Gratuita</a>
+</div>
+
+<!-- HERO -->
+<section class="ez-hero">
+  <div class="ez-hero-inner">
+    <div>
+      <div class="ez-badge"><i class="fas fa-bolt"></i> Estratégia Patrimonial · Brasileiros na Europa</div>
+      <h1>Transforme seu salário em Euro em<br><span class="line2">patrimônio no Brasil</span></h1>
+      <p>Um plano estruturado para brasileiros que vivem em Portugal, Irlanda ou qualquer país da zona do Euro — com um ponto de partida acessível a partir de <strong>60€ por mês</strong>.</p>
+      <div class="ez-hero-btns">
+        <a href="#" class="ez-btn ez-btn-green" onclick="openQuiz(event)"><i class="fas fa-gift"></i> Análise Gratuita</a>
+        <a href="https://wa.me/351936907137" class="ez-btn ez-btn-outline" target="_blank"><i class="fab fa-whatsapp"></i> Falar no WhatsApp</a>
+      </div>
+      <div class="ez-hero-points">
+        <span><i class="fas fa-check"></i> Análise sem custo</span>
+        <span><i class="fas fa-check"></i> Sem compromisso</span>
+        <span><i class="fas fa-check"></i> Em português</span>
+        <span><i class="fas fa-check"></i> 100% à distância</span>
+      </div>
+    </div>
+    <div class="ez-hero-card">
+      <div class="hk">Ponto de partida</div>
+      <div class="big">60€</div>
+      <div class="per">por mês</div>
+      <ul>
+        <li><i class="fas fa-chevron-right"></i> Planejamento que cabe no orçamento de quem vive fora</li>
+        <li><i class="fas fa-chevron-right"></i> Aportes mensais consistentes, sem grandes envios</li>
+        <li><i class="fas fa-chevron-right"></i> Método em 7 etapas com acompanhamento</li>
+        <li><i class="fas fa-chevron-right"></i> Atendimento online em português</li>
+      </ul>
+      <a href="#" class="ez-btn ez-btn-green" style="width:100%;justify-content:center" onclick="openQuiz(event)"><i class="fas fa-arrow-right"></i> Quero começar agora</a>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section class="ez-section ez-dark">
+  <div class="ez-sec-header">
+    <div class="ez-sec-tag">O ativo mais escasso</div>
+    <h2 class="ez-sec-title">O tempo trabalha a seu favor —<br>se você começar agora</h2>
+    <p class="ez-sec-sub">Cada mês de hesitação é um mês a menos de construção. Veja quanto tempo ainda resta neste ano.</p>
+  </div>
+  <div class="ez-count">
+    <div class="ez-count-card"><b id="cd-d">00</b><small>dias</small></div>
+    <div class="ez-count-card"><b id="cd-h">00</b><small>horas</small></div>
+    <div class="ez-count-card"><b id="cd-m">00</b><small>minutos</small></div>
+    <div class="ez-count-card"><b id="cd-s">00</b><small>segundos</small></div>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="ez-section">
+  <div class="ez-sec-header">
+    <div class="ez-sec-tag">O padrão silencioso</div>
+    <h2 class="ez-sec-title">O erro mais comum de <span>quem mora fora</span></h2>
+    <p class="ez-sec-sub">Você trabalha muito, ganha bem, economiza com disciplina — e mesmo assim o patrimônio quase não se move.</p>
+  </div>
+  <div class="ez-cards">
+    <div class="ez-card ez-gcard"><div class="ez-cicon g"><i class="fas fa-euro-sign"></i></div><h3>Rendimento baixo</h3><p>Dinheiro parado rendendo pouco, sem acompanhar a valorização de ativos reais no Brasil.</p></div>
+    <div class="ez-card ez-gcard"><div class="ez-cicon y"><i class="fas fa-arrow-trend-down"></i></div><h3>Conversão sem estratégia</h3><p>Anos de trabalho no exterior reduzidos a uma conta poupança, sem plano de aplicação.</p></div>
+    <div class="ez-card ez-gcard"><div class="ez-cicon b"><i class="fas fa-dice"></i></div><h3>Retorno na emoção</h3><p>A volta ao Brasil decidida no impulso, sem estrutura, sem renda e sem horizonte definido.</p></div>
+  </div>
+</section>
+
+<!-- VANTAGENS -->
+<section class="ez-section ez-bg-gray">
+  <div class="ez-sec-header">
+    <div class="ez-sec-tag">Vantagem competitiva</div>
+    <h2 class="ez-sec-title">Seu salário em Euro vale muito mais <span>no Brasil</span></h2>
+    <p class="ez-sec-sub">Quem vive fora tem uma assimetria rara a seu favor: recebe em moeda forte e constrói ativos onde o mesmo valor tem outro peso.</p>
+  </div>
+  <div class="ez-cards">
+    <div class="ez-card ez-gcard"><div class="ez-cicon g"><i class="fas fa-money-bill-transfer"></i></div><h3>Efeito cambial</h3><p>Uma parcela que cabe no seu orçamento europeu pode representar um esforço muito diferente na realidade brasileira.</p></div>
+    <div class="ez-card ez-gcard"><div class="ez-cicon y"><i class="fas fa-house-chimney"></i></div><h3>Poder de compra</h3><p>Ativos reais no Brasil, cotados em reais, sustentados por uma renda formada em Euro, Dólar ou Libra.</p></div>
+    <div class="ez-card ez-gcard"><div class="ez-cicon b"><i class="fas fa-chart-line"></i></div><h3>Horizonte longo</h3><p>Estar fora costuma significar maior capacidade de poupança mensal — o combustível de qualquer construção patrimonial.</p></div>
+  </div>
+</section>
+
+<!-- ESCADA 5 DEGRAUS -->
+<section class="ez-section">
+  <div class="ez-sec-header">
+    <div class="ez-sec-tag">A visão completa</div>
+    <h2 class="ez-sec-title">Não é comprar um imóvel. É construir <span>um sistema</span></h2>
+    <p class="ez-sec-sub">Um imóvel é um evento. Patrimônio é uma sequência — cada degrau apoia o próximo.</p>
+  </div>
+  <div class="ez-ladder">
+    <div class="ez-rung"><div class="n">01</div><div><h4>Primeiro ativo patrimonial</h4><p>O passo que muda a identidade financeira da sua família.</p></div></div>
+    <div class="ez-rung"><div class="n">02</div><div><h4>Segundo ativo patrimonial</h4><p>A estrutura deixa de ser um evento e vira um sistema.</p></div></div>
+    <div class="ez-rung"><div class="n">03</div><div><h4>Renda passiva</h4><p>O patrimônio começa a trabalhar no lugar do seu esforço.</p></div></div>
+    <div class="ez-rung"><div class="n">04</div><div><h4>Aposentadoria planejada</h4><p>Um futuro que não depende apenas do sistema público.</p></div></div>
+    <div class="ez-rung"><div class="n">05</div><div><h4>Liberdade financeira</h4><p>Escolher onde viver, quando voltar e como viver.</p></div></div>
+  </div>
+</section>
+
+<!-- IMAGEM DO FUTURO -->
+<section class="ez-section ez-dark">
+  <div class="ez-sec-header">
+    <div class="ez-sec-tag">O futuro que se planeja</div>
+    <h2 class="ez-sec-title">Volte ao Brasil <span style="color:var(--gold)">sem começar do zero</span></h2>
+    <p class="ez-sec-sub">Voltar é fácil. Voltar com estrutura é outra história. Imagine o dia do desembarque:</p>
+  </div>
+  <ul class="ez-checks">
+    <li><i class="fas fa-check"></i> Sem depender exclusivamente do INSS</li>
+    <li><i class="fas fa-check"></i> Sem depender financeiramente dos filhos</li>
+    <li><i class="fas fa-check"></i> Sem depender de aluguel para morar</li>
+    <li><i class="fas fa-check"></i> Com patrimônio no seu nome</li>
+    <li><i class="fas fa-check"></i> Com uma renda que continua chegando</li>
+    <li><i class="fas fa-check"></i> Com tranquilidade para escolher o que vem depois</li>
+  </ul>
+</section>
+
+<!-- PREÇO -->
+<section class="ez-section ez-bg-gray">
+  <div class="ez-sec-header">
+    <div class="ez-sec-tag">Acessível de verdade</div>
+    <h2 class="ez-sec-title">Você não precisa ser rico <span>para começar</span></h2>
+    <p class="ez-sec-sub">O que separa quem constrói patrimônio de quem apenas trabalha muito raramente é o valor inicial. É a data de início.</p>
+  </div>
+  <div class="ez-price-card ez-gcard">
+    <div class="from">Ponto de partida</div>
+    <div class="val">60€</div>
+    <div class="per">por mês</div>
+    <p>Um planejamento inicial pode nascer com um valor que cabe no orçamento de quem vive fora. Quanto antes começar, maior o potencial de construção ao longo do tempo.</p>
+  </div>
+</section>
+
+<!-- MÉTODO 7 ETAPAS -->
+<section class="ez-section">
+  <div class="ez-sec-header">
+    <div class="ez-sec-tag">Método estruturado</div>
+    <h2 class="ez-sec-title">Existe um caminho. <span>E ele tem ordem.</span></h2>
+    <p class="ez-sec-sub">Nada depende de sorte ou de timing perfeito. É um processo em etapas, conduzido do diagnóstico até a formação de renda.</p>
+  </div>
+  <div class="ez-rail">
+    <div class="ez-mcard"><div class="num">01</div><h3>Receita em Euro</h3><p>Sua renda no exterior é o ponto de partida de tudo.</p></div>
+    <div class="ez-mcard"><div class="num">02</div><h3>Planejamento Financeiro</h3><p>Diagnóstico da sua realidade e da sua capacidade mensal.</p></div>
+    <div class="ez-mcard"><div class="num">03</div><h3>Estratégia Patrimonial</h3><p>Objetivos, prazos e prioridades definidos com clareza.</p></div>
+    <div class="ez-mcard"><div class="num">04</div><h3>Aquisição de Ativos</h3><p>Ativos reais no Brasil, dentro do plano traçado.</p></div>
+    <div class="ez-mcard"><div class="num">05</div><h3>Valorização</h3><p>O ativo acompanha o mercado ao longo do tempo.</p></div>
+    <div class="ez-mcard"><div class="num">06</div><h3>Construção de Patrimônio</h3><p>A estrutura cresce e se organiza em camadas.</p></div>
+    <div class="ez-mcard"><div class="num">07</div><h3>Renda</h3><p>O patrimônio passa a gerar fluxo para a sua família.</p></div>
+  </div>
+  <p class="ez-rail-hint">← Deslize horizontalmente para ver as sete etapas →</p>
+</section>
+
+<!-- FAQ -->
+<section class="ez-section ez-bg-gray">
+  <div class="ez-sec-header">
+    <div class="ez-sec-tag">Dúvidas frequentes</div>
+    <h2 class="ez-sec-title">As perguntas que <span>quase todo mundo faz</span></h2>
+  </div>
+  <div class="ez-faq">
+    <details><summary>Preciso ter muito dinheiro guardado para começar?</summary><p>Não. O ponto de partida do planejamento pode ser de 60€ por mês. O que define o resultado é a constância e a estratégia, não o valor inicial.</p></details>
+    <details><summary>Moro fora do Brasil. Consigo fazer tudo à distância?</summary><p>Sim. Todo o processo — diagnóstico, planejamento e acompanhamento — é conduzido 100% online, com atendimento em português.</p></details>
+    <details><summary>Preciso enviar dinheiro para o Brasil todo mês?</summary><p>Não necessariamente. A estratégia é desenhada conforme a sua realidade: capacidade de poupança, objetivos e prazo.</p></details>
+    <details><summary>A análise inicial tem algum custo?</summary><p>Não. A primeira análise é gratuita e sem compromisso. Você só decide se quer seguir depois de entender a proposta.</p></details>
+    <details><summary>Em quanto tempo vejo resultado?</summary><p>Patrimônio é construção de médio e longo prazo. O método prioriza consistência e ordem das etapas, não promessas de enriquecimento rápido.</p></details>
+    <details><summary>Meus dados estão seguros?</summary><p>Sim. As informações enviadas são usadas exclusivamente para o contato e a elaboração da sua análise personalizada.</p></details>
+  </div>
+</section>
+
+<!-- CTA + FORM -->
+<section class="ez-section ez-dark" id="contato">
+  <div class="ez-sec-header">
+    <div class="ez-sec-tag">Último passo</div>
+    <h2 class="ez-sec-title">O melhor momento era alguns anos atrás.<br><span style="color:var(--gold)">O segundo melhor é agora.</span></h2>
+  </div>
+  <div class="ez-form-wrap">
+    <div>
+      <p class="lead">Solicite gratuitamente uma análise personalizada e descubra qual estratégia patrimonial faz sentido para o seu momento de vida — sem compromisso e sem linguagem complicada.</p>
+      <p class="lead">Um consultor especializado entra em contato em até <strong style="color:var(--gold)">24 horas</strong>.</p>
+      <a href="https://wa.me/351936907137" class="ez-btn ez-btn-green" target="_blank"><i class="fab fa-whatsapp"></i> Falar no WhatsApp</a>
+    </div>
+    <div class="ez-form-card">
+      <h3>Solicitar análise gratuita</h3>
+      <p>Preencha os dados abaixo. Levamos menos de 1 minuto.</p>
+      <form onsubmit="return sendLead(event)">
+        <div class="ez-field"><label>Nome completo</label><input type="text" id="f-name" placeholder="Seu nome" required></div>
+        <div class="ez-field"><label>E-mail</label><input type="email" id="f-email" placeholder="seu@email.com" required></div>
+        <div class="ez-field"><label>WhatsApp</label><input type="tel" id="f-phone" placeholder="+351 ..." required></div>
+        <div class="ez-field"><label>País onde mora</label>
+          <select id="f-country">
+            <option>Portugal</option><option>Irlanda</option><option>Alemanha</option>
+            <option>Espanha</option><option>França</option><option>Itália</option>
+            <option>Holanda</option><option>Bélgica</option><option>Outro</option>
+          </select>
+        </div>
+        <button class="ez-btn ez-btn-green" type="submit"><i class="fas fa-paper-plane"></i> Receber análise gratuita</button>
+      </form>
+      <p class="ez-form-note"><i class="fas fa-lock"></i> Seus dados são usados apenas para este contato.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="ez-footer">
+  <div class="ez-footer-inner">
+    <div class="ez-footer-brand">
+      <a href="eurozuca.html" class="ez-logo">
+        <span class="ez-logo-icon"><i class="fas fa-compass"></i></span>
+        <span>eurozuca.com<span class="ez-logo-sub">Investimentos</span></span>
+      </a>
+      <p>Estratégia patrimonial para brasileiros no exterior. Atendimento em português, 100% à distância.</p>
+      <div class="ez-footer-socials">
+        <a href="https://www.instagram.com/eurozuca/" target="_blank" class="ez-footer-social" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=100094639210572" target="_blank" class="ez-footer-social" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.youtube.com/@eurozucas" target="_blank" class="ez-footer-social" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="https://wa.me/351936907137" target="_blank" class="ez-footer-social" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+    <div class="ez-fcol">
+      <h4>Navegação</h4>
+      <a href="eurozuca.html">Início</a>
+      <a href="eurozuca.html#documentos">Documentos</a>
+      <a href="eurozuca.html#servicos">Serviços</a>
+      <a href="eurozuca-comunidade.html">Comunidade</a>
+    </div>
+    <div class="ez-fcol">
+      <h4>Investimentos</h4>
+      <a href="#" onclick="openQuiz(event);return false">Análise gratuita</a>
+      <a href="#" onclick="document.getElementById('contato').scrollIntoView({behavior:'smooth'});return false">Solicitar contato</a>
+      <a href="#" onclick="toggleAgent();return false">Consultor virtual</a>
+    </div>
+    <div class="ez-fcol">
+      <h4>Contato</h4>
+      <div class="ez-footer-contact">
+        <div class="ez-footer-contact-item"><i class="fas fa-phone"></i> +351 936 907 137</div>
+        <div class="ez-footer-contact-item"><i class="fas fa-envelope"></i> eurozucas@gmail.com</div>
+        <div class="ez-footer-contact-item"><i class="fas fa-location-dot"></i> Portugal · Atendimento online</div>
+      </div>
+    </div>
+  </div>
+  <div class="ez-fbottom">
+    <p>© 2026 eurozuca.com · Investimentos. Conteúdo informativo. Resultados variam. Esta página não constitui recomendação de investimento.</p>
+  </div>
+</footer>
+
+<!-- Quiz Análise Gratuita -->
+<div class="quiz-overlay" id="quizOverlay" onclick="if(event.target===this)closeQuiz()">
+  <div class="quiz-card">
+    <div class="quiz-top">
+      <h3>Receba sua análise gratuita</h3>
+      <p>5 respostas rápidas · menos de 1 minuto · resposta em até 24h</p>
+      <button class="quiz-x" onclick="closeQuiz()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="quiz-progress" id="quizProgress"></div>
+    <div class="quiz-step-label" id="quizStepLabel"></div>
+    <div class="quiz-body" id="quizBody"></div>
+    <div class="quiz-err" id="quizErr"></div>
+    <div class="quiz-foot" id="quizFoot"></div>
+  </div>
+</div>
+
+<!-- Consultor Virtual -->
+<div class="agent-wrap">
+  <div class="agent-callout" id="agentCallout">
+    <div class="bubble"><p>Fale agora com o<br><b>Consultor Virtual Eurozuca</b></p></div>
+    <span class="arrow">↘</span>
+  </div>
+  <button class="agent-fab" id="agentFab" onclick="toggleAgent()" aria-label="Falar com o consultor virtual"><span class="mark">€</span></button>
+</div>
+<div class="agent-panel" id="agentPanel">
+  <div class="agent-head">
+    <div class="avatar">€</div>
+    <div><div class="t1">Eurozuca · Consultor Virtual</div><div class="t2">Investimentos · Atendimento automatizado</div></div>
+    <button class="agent-close" onclick="toggleAgent()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="agent-body" id="agentBody"></div>
+  <div class="agent-foot">
+    <textarea id="agentInput" rows="1" placeholder="Escreva a sua dúvida…" onkeydown="agentKey(event)"></textarea>
+    <button class="agent-send" id="agentSend" onclick="sendAgentMsg()" title="Enviar"><i class="fas fa-paper-plane"></i></button>
+  </div>
+</div>
+
+<a href="https://wa.me/351936907137" target="_blank" class="ez-wa"><i class="fab fa-whatsapp"></i> Resposta em minutos</a>
+
+<script>
+/* ===== NAV ===== */
+window.addEventListener('scroll', function() {
+  document.getElementById('ezNav').classList.toggle('scrolled', window.scrollY > 50);
+});
+function ezToggleMenu() {
+  document.getElementById('ezMobileMenu').classList.toggle('open');
+  document.getElementById('ezOverlay').classList.toggle('active');
+}
+
+/* ===== Countdown ===== */
+function tick(){
+  const now = new Date();
+  const end = new Date(now.getFullYear(), 11, 31, 23, 59, 59);
+  let d = Math.max(0, end - now);
+  const days = Math.floor(d/86400000); d%=86400000;
+  const h = Math.floor(d/3600000); d%=3600000;
+  const m = Math.floor(d/60000); d%=60000;
+  const s = Math.floor(d/1000);
+  const pad = function(n){ return String(n).padStart(2,'0'); };
+  document.getElementById('cd-d').textContent = pad(days);
+  document.getElementById('cd-h').textContent = pad(h);
+  document.getElementById('cd-m').textContent = pad(m);
+  document.getElementById('cd-s').textContent = pad(s);
+}
+setInterval(tick, 1000); tick();
+
+/* ===== Leads ===== */
+const NL = String.fromCharCode(10);
+const LEAD_WEBHOOK_URL = ''; // <- cole a URL do n8n para receber também os leads do formulário
+const QUIZ_WEBHOOK_URL = 'https://formspree.io/f/SEU_FORM_ID';
+/* ATIVAR E-MAIL: crie conta no formspree.io com eurozucas@gmail.com, crie um form,
+   copie o ID (ex.: f/xabcdwyz) e substitua SEU_FORM_ID acima. Para usar n8n no lugar,
+   apague a URL do Formspree e cole a sua URL de webhook do n8n. */
+function saveLead(lead){
+  try{
+    const leads = JSON.parse(localStorage.getItem('eurozuca_leads') || '[]');
+    leads.push(Object.assign({data: new Date().toISOString()}, lead));
+    localStorage.setItem('eurozuca_leads', JSON.stringify(leads));
+  }catch(e){}
+  const hook = QUIZ_WEBHOOK_URL.indexOf('SEU_FORM_ID') === -1 ? QUIZ_WEBHOOK_URL : (LEAD_WEBHOOK_URL || '');
+  if(!hook) return Promise.resolve(false);
+  return fetch(hook, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(lead)
+  }).then(function(r){ return r.ok; }).catch(function(){ return false; });
+}
+function sendLead(e){
+  e.preventDefault();
+  const name = document.getElementById('f-name').value.trim();
+  saveLead({
+    nome: name,
+    email: document.getElementById('f-email').value.trim(),
+    whatsapp: document.getElementById('f-phone').value.trim(),
+    pais: document.getElementById('f-country').value,
+    origem: 'formulario_site'
+  });
+  const btn = e.target.querySelector('button');
+  btn.innerHTML = '<i class="fas fa-check"></i> Recebido, ' + name.split(' ')[0] + '!';
+  e.target.querySelectorAll('input,select,button').forEach(function(el){ el.disabled = true; });
+  return false;
+}
+
+/* ===== Consultor Virtual ===== */
+const KB = [
+ {keys:['analise','gratuita','diagnóstico','diagnostico','começar','comecar'],
+  a:'A análise inicial é gratuita e sem compromisso. É um diagnóstico da sua realidade: renda, capacidade mensal e objetivos. A partir daí você decide se quer seguir — clique em "Análise Gratuita" aqui no site ou chame no WhatsApp +351 936 907 137. Um consultor entra em contato em até 24 horas.'},
+ {keys:['60','valor','quanto','preço','preco','mínimo','minimo','mensal','aporte'],
+  a:'Um planejamento inicial pode partir de aproximadamente 60€ por mês — um valor pensado para caber no orçamento de quem vive fora. O valor evolui conforme sua capacidade e seus objetivos mudam. O que importa não é o valor inicial: é a data de início.'},
+ {keys:['de uma vez','grande quantia','enviar muito','transferência','transferencia'],
+  a:'Não. A lógica é justamente o contrário: aportes mensais consistentes, dentro da sua realidade, em vez de grandes envios pontuais. É a constância que constrói o patrimônio.'},
+ {keys:['tempo','prazo','quando','demora','resultado','retorno','anos'],
+  a:'Depende do seu ponto de partida, do valor aportado e dos objetivos definidos. Não existe prazo garantido: existe horizonte planejado, revisado ao longo do caminho. Quanto antes começar, maior tende a ser o potencial de construção.'},
+ {keys:['acompanhamento','acompanha','revisão','revisao'],
+  a:'Você tem contato direto com o consultor por WhatsApp e videochamadas, com revisões periódicas da estratégia sempre que sua vida ou seus planos mudarem. Não é um produto que você compra e fica sozinho: é um processo conduzido.'},
+ {keys:['consórcio','consorcio','cota','contemplação','contemplacao','lance'],
+  a:'O consórcio é uma das ferramentas da estratégia: permite planejar a aquisição de ativos com aportes mensais, sem juros, e pode entrar no plano conforme seus objetivos e prazos. Na análise gratuita o consultor mostra se faz sentido para o seu caso.'},
+ {keys:['câmbio','cambio','moeda','euro','dólar','dolar','libra','valorização','valorizacao'],
+  a:'Essa é a sua principal vantagem: receber em moeda forte e construir ativos no Brasil, onde o mesmo valor tem outro peso. Ativos reais cotados em reais, sustentados por uma renda formada em Euro, Dólar ou Libra.'},
+ {keys:['inss','aposentadoria','previdência','previdencia','voltar'],
+  a:'O objetivo é você voltar ao Brasil sem depender exclusivamente do INSS, sem depender dos filhos e sem pagar aluguel — com patrimônio no seu nome e uma renda que continua chegando. A ordem das etapas é o que torna isso possível.'},
+ {keys:['distância','distancia','online','remoto','fora do brasil','exterior','morar fora'],
+  a:'Sim, 100% à distância. Diagnóstico, planejamento e acompanhamento são feitos online, com atendimento em português, de qualquer país. Você não precisa voltar ao Brasil para começar.'},
+ {keys:['documentos','documento','conta bancária','bancaria','banco','nif','imposto'],
+  a:'Na primeira conversa, o consultor orienta toda a parte prática conforme o seu país de residência. Não se preocupe com burocracia agora — o diagnóstico vem primeiro, os detalhes vêm depois.'},
+ {keys:['risco','seguro','garantia','perder dinheiro','confiável','confiavel'],
+  a:'Transparência é prioridade: nada de promessas de enriquecimento rápido ou prazo garantido. O método é estruturado em etapas, com revisões periódicas, e a primeira análise é gratuita justamente para você avaliar com calma.'},
+ {keys:['dados','privacidade','lgpd','segurança','seguranca'],
+  a:'Seus dados são usados exclusivamente para o contato e a elaboração da sua análise personalizada. Nada é compartilhado com terceiros.'},
+ {keys:['imóvel','imovel','casa','terreno','apartamento'],
+  a:'Um imóvel é um evento; patrimônio é uma sequência: primeiro ativo, segundo ativo, renda passiva, aposentadoria planejada e liberdade financeira. Cada degrau apoia o próximo — e é a ordem que importa mais que o valor inicial.'},
+ {keys:['funciona','método','metodo','etapas','processo','passo','sistema'],
+  a:'O método segue 7 etapas em ordem: Receita em Euro, Planejamento Financeiro, Estratégia Patrimonial, Aquisição de Ativos, Valorização, Construção de Patrimônio e Renda. Nada depende de sorte: é processo conduzido com acompanhamento do início ao fim.'},
+ {keys:['whatsapp','consultor','pessoa','humano','falar','atendente','telefone'],
+  a:'Claro! Você fala direto com um consultor pelo WhatsApp +351 936 907 137 (Portugal), com resposta em até 24 horas. É só clicar no botão verde aqui no site.'},
+ {keys:['obrigado','obrigada','valeu','ok','perfeito','ótimo','otimo'],
+  a:'Por nada! 😊 Estou aqui sempre que precisar. E lembre-se: o segundo melhor momento para começar é agora.'}
+];
+const GOALS = ['Construir patrimônio no Brasil','Gerar renda passiva','Planejar minha volta ao Brasil','Entender o consórcio','Falar com um consultor'];
+let agentOpened = false;
+function toggleAgent(){
+  const p = document.getElementById('agentPanel');
+  const callout = document.getElementById('agentCallout');
+  p.classList.toggle('open');
+  if(p.classList.contains('open')){
+    callout.style.display = 'none';
+    if(!agentOpened){
+      agentOpened = true;
+      agentSay('Olá! Sou a IA da Eurozuca Investimentos, seu consultor virtual. Posso explicar como transformar sua renda em Euro em patrimônio no Brasil — sem promessas milagrosas, com método e acompanhamento.'+NL+NL+'Para começar: o que você gostaria de alcançar?', GOALS);
+    }
+    document.getElementById('agentInput').focus();
+  } else {
+    callout.style.display = 'flex';
+  }
+}
+function scrollAgent(){ const b=document.getElementById('agentBody'); b.scrollTop=b.scrollHeight; }
+function agentSay(text, chips){
+  const b = document.getElementById('agentBody');
+  const sendBtn = document.getElementById('agentSend');
+  sendBtn.disabled = true;
+  const typing = document.createElement('div');
+  typing.className='msg bot typing'; typing.innerHTML='<i></i><i></i><i></i>';
+  b.appendChild(typing); scrollAgent();
+  setTimeout(function(){
+    typing.remove();
+    const m = document.createElement('div');
+    m.className='msg bot'; m.innerHTML=text.split(NL).join('<br>');
+    b.appendChild(m);
+    if(chips && chips.length){
+      const c = document.createElement('div'); c.className='achips';
+      chips.forEach(function(t){
+        const btn=document.createElement('button'); btn.className='achip'; btn.textContent=t;
+        btn.onclick=function(){ agentUserSay(t); }; c.appendChild(btn);
+      });
+      b.appendChild(c);
+    }
+    scrollAgent();
+    sendBtn.disabled = false;
+  }, 800 + Math.random()*600);
+}
+/* IA REAL (n8n): crie um workflow com Webhook (POST) ligado a um nó de IA
+   que retorne {"reply": "..."} e cole a URL abaixo. Vazio = banco local. */
+const AI_WEBHOOK_URL = '';
+async function askAI(userText){
+  try{
+    const hist = Array.prototype.slice.call(document.querySelectorAll('#agentBody .msg'), -10)
+      .map(function(m){ return {role: m.classList.contains('user') ? 'user' : 'assistant', content: m.textContent}; });
+    const res = await fetch(AI_WEBHOOK_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({message: userText, history: hist})
+    });
+    if(!res.ok) return null;
+    const data = await res.json();
+    return (data.reply || data.resposta || data.message || data.text || '').toString().trim() || null;
+  }catch(err){ return null; }
+}
+function agentTyping(){
+  const b = document.getElementById('agentBody');
+  const el = document.createElement('div');
+  el.className='msg bot typing'; el.innerHTML='<i></i><i></i><i></i>';
+  b.appendChild(el); scrollAgent();
+  return el;
+}
+function addChips(){
+  const b = document.getElementById('agentBody');
+  const c = document.createElement('div'); c.className='achips';
+  GOALS.forEach(function(gt){
+    const btn=document.createElement('button'); btn.className='achip'; btn.textContent=gt;
+    btn.onclick=function(){ agentUserSay(gt); }; c.appendChild(btn);
+  });
+  b.appendChild(c); scrollAgent();
+}
+async function agentUserSay(text){
+  const b = document.getElementById('agentBody');
+  const m = document.createElement('div');
+  m.className='msg user'; m.textContent = text;
+  b.appendChild(m); scrollAgent();
+  const t = text.toLowerCase();
+  if(AI_WEBHOOK_URL){
+    const typing = agentTyping();
+    const reply = await askAI(text);
+    typing.remove();
+    if(reply){
+      const rm = document.createElement('div');
+      rm.className='msg bot'; rm.innerHTML = reply.split(NL).join('<br>');
+      b.appendChild(rm); addChips();
+      return;
+    }
+  }
+  const hit = KB.find(function(e){ return e.keys.some(function(k){ return t.indexOf(k) !== -1; }); });
+  if(hit){ agentSay(hit.a, GOALS); }
+  else if(t.indexOf('consultor') !== -1 || t.indexOf('falar') !== -1 || t.indexOf('whatsapp') !== -1){
+    agentSay('Perfeito! Um consultor real assume a partir daqui. Chame no WhatsApp +351 936 907 137 — atendimento em português, resposta em até 24h.', []);
+  }
+  else{
+    agentSay('Boa pergunta! Para um direcionamento personalizado, o ideal é falar com um consultor no WhatsApp +351 936 907 137.'+NL+NL+'Mas posso ajudar agora mesmo com: análise gratuita, valores iniciais, aportes mensais, consórcio, prazos ou efeito cambial. O que você gostaria de saber?', GOALS);
+  }
+}
+function sendAgentMsg(){
+  const inp = document.getElementById('agentInput');
+  const v = inp.value.trim();
+  if(!v) return;
+  inp.value=''; inp.style.height='auto';
+  agentUserSay(v);
+}
+function agentKey(e){
+  if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendAgentMsg(); }
+}
+const ta = document.getElementById('agentInput');
+ta.addEventListener('input', function(){ this.style.height='auto'; this.style.height=Math.min(this.scrollHeight,112)+'px'; });
+
+/* ===== Quiz Análise Gratuita ===== */
+const QUIZ = [
+ {id:'nome', q:'Para começar: qual o seu nome?', type:'text', ph:'Digite seu nome', validate:function(v){return v.trim().length>=2||'Informe seu nome';}},
+ {id:'whatsapp', q:'Qual o seu WhatsApp? (com código do país)', type:'tel', ph:'+351 900 000 000', validate:function(v){return v.replace(/[^0-9]/g,'').length>=8||'Informe um número válido com código do país';}},
+ {id:'pais', q:'Em que país você mora?', type:'text', ph:'Ex.: Portugal, Irlanda, Alemanha...', validate:function(v){return v.trim().length>=2||'Informe o país';}},
+ {id:'moeda', q:'Em qual moeda você recebe?', type:'opt', opts:['Euro (€)','Dólar ($)','Libra (£)','Outra']},
+ {id:'aporte', q:'Quanto conseguiria aportar por mês?', type:'opt', opts:['Até 60€','Entre 60€ e 150€','Entre 150€ e 300€','Mais de 300€']}
+];
+let quizIdx = 0;
+let quizData = {};
+function openQuiz(e){ if(e&&e.preventDefault)e.preventDefault(); quizIdx=0; quizData={}; document.getElementById('quizOverlay').classList.add('open'); document.body.style.overflow='hidden'; renderQuiz(); return false; }
+function closeQuiz(){ document.getElementById('quizOverlay').classList.remove('open'); document.body.style.overflow=''; }
+function renderQuiz(){
+  const s = QUIZ[quizIdx];
+  const body = document.getElementById('quizBody');
+  const foot = document.getElementById('quizFoot');
+  document.getElementById('quizErr').textContent='';
+  document.getElementById('quizStepLabel').textContent = 'Passo '+(quizIdx+1)+' de '+QUIZ.length;
+  const prog = document.getElementById('quizProgress');
+  prog.innerHTML='';
+  for(let i=0;i<QUIZ.length;i++){
+    const d=document.createElement('i');
+    if(i<=quizIdx) d.className='done';
+    prog.appendChild(d);
+  }
+  let h = '<h4>'+s.q+'</h4>';
+  if(s.type==='opt'){
+    h += '<div class="quiz-opts">'+s.opts.map(function(o){
+      const sel = quizData[s.id]===o ? ' sel' : '';
+      return '<button class="quiz-opt'+sel+'" data-opt="'+o+'">'+o+'</button>';
+    }).join('')+'</div>';
+  } else {
+    h += '<input class="quiz-input" id="quizField" type="'+(s.type==='tel'?'tel':'text')+'" placeholder="'+s.ph+'" value="'+(quizData[s.id]||'')+'">';
+  }
+  body.innerHTML = h;
+  if(s.type==='opt'){
+    Array.prototype.forEach.call(body.querySelectorAll('.quiz-opt'), function(b){
+      b.onclick=function(){ pickOpt(b); };
+    });
+  } else {
+    const inp = document.getElementById('quizField');
+    if(inp){ inp.focus(); inp.addEventListener('keydown',function(e){ if(e.key==='Enter') quizNext(); }); }
+  }
+  foot.innerHTML='';
+  if(quizIdx>0){
+    const b=document.createElement('button');
+    b.className='quiz-back'; b.textContent='← Voltar'; b.onclick=quizBack;
+    foot.appendChild(b);
+  }
+  const n=document.createElement('button');
+  n.className='quiz-next'; n.textContent = quizIdx===QUIZ.length-1 ? 'Ver resultado ✓' : 'Próxima →';
+  n.onclick=quizNext;
+  foot.appendChild(n);
+}
+function pickOpt(btn){
+  const s=QUIZ[quizIdx];
+  quizData[s.id]=btn.getAttribute('data-opt');
+  Array.prototype.forEach.call(btn.parentElement.querySelectorAll('.quiz-opt'), function(b){ b.classList.remove('sel'); });
+  btn.classList.add('sel');
+  if(quizIdx===QUIZ.length-1){ quizNext(); } else { setTimeout(quizNext, 350); }
+}
+function quizBack(){ if(quizIdx>0){ quizIdx--; renderQuiz(); } }
+function quizNext(){
+  const s=QUIZ[quizIdx];
+  if(s.type!=='opt'){
+    const v=(document.getElementById('quizField').value||'');
+    const r=s.validate(v);
+    if(r!==true){ document.getElementById('quizErr').textContent=r; return; }
+    quizData[s.id]=v.trim();
+  } else if(!quizData[s.id]){
+    document.getElementById('quizErr').textContent='Selecione uma opção para continuar';
+    return;
+  }
+  if(quizIdx<QUIZ.length-1){ quizIdx++; renderQuiz(); } else { quizFinish(); }
+}
+function quizFinish(){
+  const body=document.getElementById('quizBody');
+  const foot=document.getElementById('quizFoot');
+  document.getElementById('quizStepLabel').textContent='Concluído ✓';
+  saveLead({nome:quizData.nome, whatsapp:quizData.whatsapp, pais:quizData.pais, moeda:quizData.moeda, aporte:quizData.aporte, origem:'quiz_analise_gratuita'});
+  const prog=document.getElementById('quizProgress');
+  Array.prototype.forEach.call(prog.querySelectorAll('i'), function(i){ i.className='done'; });
+  const msg='Olá! Meu nome é '+quizData.nome+'. Moro em '+quizData.pais+', recebo em '+quizData.moeda+' e posso aportar '+quizData.aporte+' por mês. Quero minha análise gratuita.';
+  const waUrl='https://wa.me/351936907137?text='+encodeURIComponent(msg);
+  body.innerHTML='<div class="quiz-done"><div class="check"><i class="fas fa-check"></i></div><h4>Pedido registado, '+quizData.nome.split(' ')[0]+'! 🎉</h4><p>Sua análise personalizada foi solicitada e já enviada para nossa equipe. Um consultor da Eurozuca Investimentos entra em contato pelo WhatsApp <b>'+quizData.whatsapp+'</b> em até <b>24 horas</b>.</p><p style="font-size:.8rem;color:var(--text-muted);margin-bottom:14px">Abrimos o WhatsApp com sua mensagem pronta — é só confirmar o envio. Se não abrir, clique abaixo:</p><a class="quiz-wa" href="'+waUrl+'" target="_blank"><i class="fab fa-whatsapp"></i> Falar agora no WhatsApp</a><div class="quiz-note">Seus dados são usados apenas para este contato.</div></div>';
+  foot.innerHTML='';
+  setTimeout(function(){ try{ window.open(waUrl,'_blank'); }catch(e){} }, 600);
+}
+
+/* ===== Animação de entrada ===== */
+var obs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.style.opacity = '1'; });
+}, { threshold: 0.08 });
+document.querySelectorAll('.ez-card, .ez-rung, .ez-mcard, .ez-gcard, .ez-count-card').forEach(function(el) {
+  el.style.opacity = '0'; el.style.transition = 'opacity 0.6s ease'; obs.observe(el);
+});
+</script>
+</body>
+</html>
