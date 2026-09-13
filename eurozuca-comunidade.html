@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eurozuca.com — Plataforma da Comunidade</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --green: #00a651; --green-light: #e8f5e9; --green-glow: rgba(0,166,81,0.15);
+            --gold: #d4af37; --gold-light: #faf3d7; --gold-glow: rgba(212,175,55,0.2);
+            --blue: #003399; --blue-light: #e3f2fd;
+            --bg: #ffffff; --bg-soft: #f8f9fa; --bg-gray: #f5f5f5;
+            --text: #1a1a1a; --text-sec: #616161; --text-muted: #9e9e9e;
+            --border: #e8e8e8;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+            --grad-border: linear-gradient(135deg,var(--green),var(--gold),var(--blue));
+            --font-body: 'Inter', sans-serif;
+            --font-display: 'Space Grotesk', sans-serif;
+        }
+
+        .ez-wrap { font-family: var(--font-body); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        .ez-wrap a { text-decoration: none; }
+
+        /* ===== NAV ===== */
+        .ez-nav { position: fixed; top: 0; width: 100%; z-index: 1000; padding: 1rem 5%; background: transparent; transition: all .3s; }
+        .ez-nav.scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: .7rem 5%; box-shadow: var(--shadow-sm); }
+        .ez-nav-inner { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .ez-logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: .6rem; }
+        .ez-logo-icon { width: 38px; height: 38px; background: linear-gradient(135deg,var(--green),#00c853); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.1rem; position: relative; }
+        .ez-logo-icon::after { content: ''; position: absolute; inset: -2px; border-radius: 12px; padding: 2px; background: var(--grad-border); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .6; }
+        .ez-logo-sub { font-size: .62rem; color: var(--text-muted); font-weight: 500; display: block; line-height: 1; margin-top: 2px; }
+        .ez-nav-links { display: flex; gap: 1.8rem; list-style: none; }
+        .ez-nav-links a { color: var(--text-sec); font-size: .88rem; font-weight: 500; transition: color .3s; position: relative; }
+        .ez-nav-links a:hover { color: var(--green); }
+        .ez-nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--grad-border); transition: width .3s; }
+        .ez-nav-links a:hover::after { width: 100%; }
+        .ez-nav-actions { display: flex; align-items: center; gap: .8rem; }
+        .ez-menu-btn { display: none; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text); }
+        .ez-mobile-menu { position: fixed; top: 0; right: -100%; width: 80%; max-width: 300px; height: 100vh; background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); z-index: 1001; padding: 5rem 1.5rem 1.5rem; transition: right .3s; border-left: 1px solid var(--border); }
+        .ez-mobile-menu.open { right: 0; }
+        .ez-mobile-menu a { display: block; color: var(--text-sec); padding: .9rem 0; font-size: 1rem; border-bottom: 1px solid var(--border); }
+        .ez-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 1000; opacity: 0; visibility: hidden; transition: all .3s; }
+        .ez-overlay.active { opacity: 1; visibility: visible; }
+
+        /* ===== BOTÕES ===== */
+        .ez-btn { padding: .9rem 1.8rem; border-radius: 50px; font-weight: 600; font-size: .9rem; display: inline-flex; align-items: center; gap: .5rem; transition: all .3s; cursor: pointer; border: 2px solid transparent; position: relative; background-clip: padding-box; font-family: inherit; }
+        .ez-btn::before { content: ''; position: absolute; inset: -2px; border-radius: 50px; padding: 2px; background: var(--grad-border); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .8; transition: opacity .3s; }
+        .ez-btn i { position: relative; z-index: 1; }
+        .ez-btn span, .ez-btn { position: relative; z-index: 1; }
+        .ez-btn-green { background: linear-gradient(135deg,var(--green),#00c853); color: #fff; }
+        .ez-btn-green:hover { transform: translateY(-2px); box-shadow: 0 8px 25px var(--green-glow); }
+        .ez-btn-outline { background: transparent; color: var(--text); }
+        .ez-btn-outline:hover { color: var(--gold); }
+        .ez-btn-sm { padding: .55rem 1.3rem; font-size: .82rem; }
+
+        /* ===== HERO ===== */
+        .ez-hero { padding: 9rem 5% 5rem; text-align: center; background: linear-gradient(180deg,var(--bg) 0%,var(--bg-gray) 100%); }
+        .ez-hero-inner { max-width: 800px; margin: 0 auto; }
+        .ez-badge { display: inline-flex; align-items: center; gap: .5rem; background: #fff; border: 1px solid var(--border); color: var(--text-sec); padding: .45rem 1.2rem; border-radius: 50px; font-size: .82rem; font-weight: 500; margin-bottom: 1.8rem; box-shadow: var(--shadow-sm); position: relative; }
+        .ez-badge i { color: var(--gold); }
+        .ez-hero h1 { font-family: var(--font-display); font-size: 3.4rem; font-weight: 700; line-height: 1.1; letter-spacing: -.03em; margin-bottom: 1.2rem; }
+        .ez-hero h1 .line2 { background: var(--grad-border); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .ez-hero > .ez-hero-inner > p { font-size: 1.1rem; color: var(--text-sec); max-width: 560px; margin: 0 auto 2.5rem; line-height: 1.7; }
+
+        /* ===== SEARCH ===== */
+        .ez-search-wrap { max-width: 680px; margin: 0 auto 1.5rem; }
+        .ez-search-box { display: flex; gap: .5rem; background: #fff; border-radius: 50px; padding: .4rem; box-shadow: var(--shadow-md); position: relative; border: 2px solid transparent; background-clip: padding-box; }
+        .ez-search-box::before { content: ''; position: absolute; inset: -2px; border-radius: 52px; padding: 2px; background: var(--grad-border); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .5; pointer-events: none; }
+        .ez-search-input-wrap { flex: 1; display: flex; align-items: center; gap: .7rem; padding: 0 1.2rem; position: relative; z-index: 1; }
+        .ez-search-input-wrap i { color: var(--text-muted); }
+        .ez-search-input-wrap input { border: none; outline: none; font-size: .92rem; width: 100%; font-family: inherit; color: var(--text); padding: .7rem 0; background: transparent; }
+        .ez-search-input-wrap input::placeholder { color: var(--text-muted); }
+        .ez-search-select { border: none; outline: none; background: transparent; font-family: inherit; font-size: .85rem; color: var(--text-sec); font-weight: 500; padding: 0 .8rem; cursor: pointer; position: relative; z-index: 1; border-left: 1px solid var(--border); }
+        .ez-search-btn { display: flex; align-items: center; gap: .5rem; background: linear-gradient(135deg,var(--green),#00c853); color: #fff; border: none; border-radius: 50px; padding: .75rem 1.6rem; font-size: .88rem; font-weight: 600; cursor: pointer; font-family: inherit; white-space: nowrap; position: relative; z-index: 1; transition: all .3s; }
+        .ez-search-btn:hover { box-shadow: 0 6px 20px var(--green-glow); transform: translateY(-1px); }
+        .ez-tags { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; }
+        .ez-tag { padding: .45rem 1.1rem; border-radius: 50px; border: 1px solid var(--border); background: #fff; font-size: .8rem; color: var(--text-sec); cursor: pointer; font-family: inherit; transition: all .3s; font-weight: 500; }
+        .ez-tag:hover { border-color: var(--green); color: var(--green); box-shadow: 0 4px 12px var(--green-glow); }
+
+        /* ===== STATS ===== */
+        .ez-stats { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; padding: 0 5% 1rem; }
+        .ez-stat { background: #fff; border-radius: 18px; padding: 1.5rem 1rem; display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-sm); position: relative; border: 2px solid transparent; background-clip: padding-box; text-align: left; }
+        .ez-stat::before { content: ''; position: absolute; inset: -2px; border-radius: 20px; padding: 2px; background: var(--grad-border); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .35; pointer-events: none; }
+        .ez-stat:nth-child(1)::before { background: linear-gradient(135deg,var(--green),var(--gold)); }
+        .ez-stat:nth-child(2)::before { background: linear-gradient(135deg,var(--gold),var(--blue)); }
+        .ez-stat:nth-child(3)::before { background: linear-gradient(135deg,var(--blue),var(--green)); }
+        .ez-stat:nth-child(4)::before { background: linear-gradient(135deg,var(--green),var(--gold),var(--blue)); }
+        .ez-stat-icon { width: 46px; height: 46px; border-radius: 14px; background: var(--green-light); display: flex; align-items: center; justify-content: center; color: var(--green); font-size: 1.2rem; flex-shrink: 0; }
+        .ez-stat-num { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--text); line-height: 1; }
+        .ez-stat-label { font-size: .78rem; color: var(--text-muted); margin-top: .2rem; }
+
+        /* ===== SECTIONS ===== */
+        .ez-section { padding: 5rem 5%; }
+        .ez-bg-gray { background: var(--bg-gray); }
+        .ez-sec-header { max-width: 1200px; margin: 0 auto 3rem; text-align: center; }
+        .ez-sec-tag { display: inline-block; background: var(--gold-light); color: var(--gold); padding: .35rem 1rem; border-radius: 50px; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-bottom: 1rem; }
+        .ez-sec-title { font-family: var(--font-display); font-size: 2.3rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: .5rem; }
+        .ez-sec-title span { color: var(--green); }
+        .ez-sec-sub { color: var(--text-sec); font-size: 1.02rem; }
+
+        /* gradient-border card base */
+        .ez-gcard { background: #fff; border: 2px solid transparent; background-clip: padding-box; position: relative; box-shadow: var(--shadow-sm); transition: all .35s; }
+        .ez-gcard::before { content: ''; position: absolute; inset: -2px; border-radius: inherit; padding: 2px; background: var(--grad-border); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .35; transition: opacity .3s; pointer-events: none; }
+        .ez-gcard:hover::before { opacity: .7; }
+        .ez-gcard:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+
+        /* ===== CATEGORIES ===== */
+        .ez-cards { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 1.2rem; }
+        .ez-card { border-radius: 18px; padding: 1.3rem 1.2rem; display: flex; align-items: center; gap: 1rem; cursor: pointer; }
+        .ez-cicon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+        .ez-cicon.g { background: var(--green-light); color: var(--green); }
+        .ez-cicon.y { background: var(--gold-light); color: var(--gold); }
+        .ez-cicon.b { background: var(--blue-light); color: var(--blue); }
+        .ez-card h3 { font-family: var(--font-display); font-size: .95rem; font-weight: 600; }
+        .ez-card p { font-size: .78rem; color: var(--text-muted); margin-top: .1rem; }
+
+        /* ===== STEPS ===== */
+        .ez-steps { max-width: 950px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 3rem; }
+        .ez-step { text-align: center; }
+        .ez-step-icon-wrap { width: 72px; height: 72px; border-radius: 20px; background: var(--green-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; color: var(--green); font-size: 1.6rem; position: relative; border: 2px solid transparent; background-clip: padding-box; }
+        .ez-step-icon-wrap::before { content: ''; position: absolute; inset: -2px; border-radius: 22px; padding: 2px; background: var(--grad-border); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .5; pointer-events: none; }
+        .ez-step-icon-wrap::after { content: attr(data-num); position: absolute; top: -8px; right: -8px; width: 26px; height: 26px; background: linear-gradient(135deg,var(--gold),#e8c860); color: #fff; border-radius: 50%; font-size: .75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid #fff; font-family: var(--font-display); }
+        .ez-step h4 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin-bottom: .5rem; }
+        .ez-step p { font-size: .88rem; color: var(--text-sec); line-height: 1.65; }
+
+        /* ===== FEATURES ===== */
+        .ez-features { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 1.4rem; }
+        .ez-feature { border-radius: 20px; padding: 1.8rem; }
+        .ez-feature .ez-cicon { margin-bottom: 1rem; }
+        .ez-feature h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: .4rem; }
+        .ez-feature p { font-size: .85rem; color: var(--text-sec); line-height: 1.65; }
+
+        /* ===== BUSINESSES ===== */
+        .ez-biz-header { max-width: 1200px; margin: 0 auto 2.5rem; display: flex; justify-content: space-between; align-items: flex-end; }
+        .ez-biz-header h2 { font-family: var(--font-display); font-size: 2rem; font-weight: 700; margin: .4rem 0 0; }
+        .ez-biz-header a { color: var(--green); font-size: .88rem; font-weight: 600; display: inline-flex; align-items: center; gap: .4rem; }
+        .ez-biz-header a:hover { gap: .6rem; }
+        .ez-biz-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 1.4rem; }
+        .ez-biz-card { border-radius: 20px; overflow: hidden; cursor: pointer; }
+        .ez-biz-img { height: 150px; position: relative; background-size: cover; background-position: center; }
+        .ez-biz-badges { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; }
+        .ez-biz-badge { display: flex; align-items: center; gap: .3rem; background: rgba(0,0,0,.55); color: #fff; padding: .25rem .6rem; border-radius: 50px; font-size: .68rem; font-weight: 600; backdrop-filter: blur(6px); }
+        .ez-biz-badge i { color: var(--gold); }
+        .ez-biz-info { padding: 1rem 1.2rem 1.2rem; }
+        .ez-biz-cat { font-size: .75rem; color: var(--text-muted); font-weight: 500; }
+        .ez-biz-name { font-family: var(--font-display); font-size: .95rem; font-weight: 600; }
+
+        /* ===== TESTIMONIALS ===== */
+        .ez-testis { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 1.4rem; }
+        .ez-testi { border-radius: 20px; padding: 2rem; }
+        .ez-testi-quote { font-size: 2.5rem; line-height: 1; margin-bottom: .6rem; background: var(--grad-border); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-family: Georgia, serif; }
+        .ez-testi-text { font-size: .88rem; color: var(--text-sec); line-height: 1.7; margin-bottom: 1.4rem; }
+        .ez-testi-author { display: flex; align-items: center; gap: .9rem; }
+        .ez-testi-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,var(--green),var(--gold)); display: flex; align-items: center; justify-content: center; color: #fff; font-size: .85rem; font-weight: 700; flex-shrink: 0; }
+        .ez-testi-name { font-size: .9rem; font-weight: 600; }
+        .ez-testi-role { font-size: .75rem; color: var(--text-muted); }
+        .ez-stars { color: var(--gold); font-size: .72rem; margin-top: .25rem; letter-spacing: 1px; }
+
+        /* ===== APP ===== */
+        .ez-app { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 4rem; }
+        .ez-app-left { max-width: 460px; }
+        .ez-app-left h2 { text-align: left; margin-bottom: .8rem; }
+        .ez-app-left > p { color: var(--text-sec); line-height: 1.7; margin-bottom: 1.8rem; font-size: .95rem; }
+        .ez-app-list { display: flex; flex-direction: column; gap: .9rem; }
+        .ez-app-item { display: flex; align-items: center; gap: .9rem; font-size: .9rem; color: var(--text-sec); font-weight: 500; }
+        .ez-app-item-icon { width: 40px; height: 40px; border-radius: 12px; background: var(--green-light); display: flex; align-items: center; justify-content: center; color: var(--green); font-size: .95rem; flex-shrink: 0; }
+        .ez-app-mockup { width: 270px; height: 500px; background: linear-gradient(180deg,var(--green) 0%,#007a3d 100%); border-radius: 36px; padding: 18px; position: relative; box-shadow: 0 20px 60px rgba(0,166,81,0.25); flex-shrink: 0; border: 2px solid transparent; background-clip: padding-box; }
+        .ez-app-mockup::before { content: ''; position: absolute; inset: -2px; border-radius: 38px; padding: 2px; background: var(--grad-border); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .7; pointer-events: none; }
+        .ez-app-mockup-notch { width: 70px; height: 18px; background: rgba(0,0,0,0.25); border-radius: 0 0 10px 10px; margin: 0 auto 14px; }
+        .ez-app-mockup h4 { color: #fff; font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin-bottom: .2rem; position: relative; z-index: 1; }
+        .ez-app-mockup .sub { color: rgba(255,255,255,.75); font-size: .78rem; margin-bottom: 1.2rem; position: relative; z-index: 1; }
+        .ez-app-mockup-item { background: rgba(255,255,255,.13); border-radius: 12px; padding: .7rem 1rem; color: #fff; font-size: .85rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: .5rem; font-weight: 500; position: relative; z-index: 1; }
+        .ez-app-promo { background: rgba(255,255,255,.18); border-radius: 12px; padding: .8rem; margin-top: 1rem; position: relative; z-index: 1; }
+        .ez-app-promo-label { font-size: .7rem; color: var(--gold-light); font-weight: 700; margin-bottom: .2rem; }
+        .ez-app-promo-text { font-size: .8rem; color: #fff; font-weight: 500; }
+
+        /* ===== PRICING ===== */
+        .ez-pricing { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; align-items: start; }
+        .ez-price-card { border-radius: 24px; padding: 2.2rem 1.8rem; }
+        .ez-price-card.popular::before { opacity: .8; }
+        .ez-popular-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg,var(--gold),#e8c860); color: #fff; padding: .3rem 1.1rem; border-radius: 50px; font-size: .68rem; font-weight: 700; display: flex; align-items: center; gap: .3rem; white-space: nowrap; border: 2px solid #fff; z-index: 2; }
+        .ez-price-name { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; }
+        .ez-price-desc { font-size: .8rem; color: var(--text-muted); margin-bottom: 1.2rem; margin-top: .2rem; }
+        .ez-price { font-family: var(--font-display); font-size: 2.6rem; font-weight: 700; margin-bottom: 1.4rem; line-height: 1; }
+        .ez-price span { font-size: .85rem; color: var(--text-muted); font-weight: 500; }
+        .ez-price-btn { width: 100%; margin-bottom: 1.6rem; padding: .8rem; font-size: .85rem; }
+        .ez-price-features { display: flex; flex-direction: column; gap: .7rem; }
+        .ez-price-feature { display: flex; align-items: center; gap: .7rem; font-size: .83rem; color: var(--text-sec); font-weight: 500; }
+        .ez-price-feature i { color: var(--green); font-size: .7rem; }
+
+        /* ===== CTA ===== */
+        .ez-cta-sec { padding: 5rem 5%; }
+        .ez-cta-box2 { max-width: 1100px; margin: 0 auto; background: linear-gradient(135deg,var(--green) 0%,#007a3d 100%); border-radius: 28px; padding: 4rem 2rem; text-align: center; color: #fff; position: relative; overflow: hidden; border: 2px solid transparent; background-clip: padding-box; }
+        .ez-cta-box2::before { content: ''; position: absolute; inset: -2px; border-radius: 30px; padding: 2px; background: var(--grad-border); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .9; pointer-events: none; }
+        .ez-cta-box2::after { content: ''; position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; background: rgba(255,255,255,0.08); border-radius: 50%; }
+        .ez-cta-box2 h2 { font-family: var(--font-display); font-size: 2.4rem; font-weight: 700; margin-bottom: .8rem; position: relative; z-index: 1; letter-spacing: -.02em; }
+        .ez-cta-box2 p { font-size: 1.05rem; color: rgba(255,255,255,.85); margin-bottom: 2rem; position: relative; z-index: 1; }
+        .ez-cta-btns { display: flex; gap: 1rem; justify-content: center; position: relative; z-index: 1; flex-wrap: wrap; }
+        .ez-btn-white { background: #fff; color: var(--green); }
+        .ez-btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .ez-btn-glass { background: rgba(255,255,255,.15); color: #fff; }
+        .ez-btn-glass:hover { background: rgba(255,255,255,.25); }
+
+        /* ===== FOOTER ===== */
+        .ez-footer { border-top: 1px solid var(--border); padding: 3.5rem 5% 1.5rem; background: var(--bg-gray); }
+        .ez-footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.4fr; gap: 3rem; margin-bottom: 2.5rem; }
+        .ez-footer-brand p { color: var(--text-muted); font-size: .85rem; line-height: 1.65; margin-top: 1rem; }
+        .ez-footer-socials { display: flex; gap: .7rem; margin-top: 1.2rem; }
+        .ez-footer-social { width: 38px; height: 38px; background: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--text-sec); box-shadow: var(--shadow-sm); transition: all .3s; }
+        .ez-footer-social:hover { background: linear-gradient(135deg,var(--green),#00c853); color: #fff; transform: translateY(-2px); }
+        .ez-fcol h4 { font-family: var(--font-display); font-size: .88rem; font-weight: 600; margin-bottom: 1rem; }
+        .ez-fcol a { display: block; color: var(--text-muted); font-size: .83rem; padding: .28rem 0; }
+        .ez-fcol a:hover { color: var(--green); }
+        .ez-footer-contact { display: flex; flex-direction: column; gap: .7rem; }
+        .ez-footer-contact-item { display: flex; align-items: center; gap: .7rem; font-size: .83rem; color: var(--text-muted); }
+        .ez-footer-contact-item i { color: var(--green); width: 16px; }
+        .ez-fbottom { max-width: 1200px; margin: 0 auto; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .ez-fbottom p { color: var(--text-muted); font-size: .78rem; }
+
+        /* ===== WHATSAPP FLOAT ===== */
+        .ez-wa { position: fixed; bottom: 24px; right: 24px; background: linear-gradient(135deg,#25D366,#128C7E); color: #fff; padding: .8rem 1.5rem; border-radius: 50px; font-size: .88rem; font-weight: 600; display: flex; align-items: center; gap: .6rem; box-shadow: 0 8px 25px rgba(37,211,102,0.4); z-index: 100; border: none; font-family: inherit; text-decoration: none; transition: all .3s; }
+        .ez-wa:hover { transform: scale(1.05); }
+
+        /* ===== RESPONSIVE ===== */
+        @media(max-width:1024px) {
+            .ez-cards { grid-template-columns: repeat(2,1fr); }
+            .ez-stats { grid-template-columns: repeat(2,1fr); }
+            .ez-biz-grid { grid-template-columns: repeat(2,1fr); }
+            .ez-features, .ez-testis, .ez-pricing { grid-template-columns: 1fr 1fr; }
+            .ez-app { flex-direction: column; gap: 2.5rem; }
+            .ez-footer-inner { grid-template-columns: 1fr 1fr; }
+            .ez-nav-links, .ez-nav-actions { display: none; }
+            .ez-menu-btn { display: block; }
+        }
+        @media(max-width:768px) {
+            .ez-hero { padding: 6.5rem 5% 3.5rem; }
+            .ez-hero h1 { font-size: 2rem; }
+            .ez-sec-title { font-size: 1.7rem; }
+            .ez-search-box { flex-direction: column; border-radius: 24px; }
+            .ez-search-box::before { border-radius: 26px; }
+            .ez-search-select { border-left: none; border-top: 1px solid var(--border); padding: .6rem 1.2rem; }
+            .ez-cards, .ez-stats, .ez-biz-grid, .ez-features, .ez-testis, .ez-pricing { grid-template-columns: 1fr; }
+            .ez-steps { grid-template-columns: 1fr; gap: 2rem; }
+            .ez-section { padding: 3.5rem 5%; }
+            .ez-cta-box2 h2 { font-size: 1.7rem; }
+            .ez-cta-box2 { padding: 2.8rem 1.2rem; }
+            .ez-biz-header { flex-direction: column; align-items: flex-start; gap: .5rem; }
+            .ez-footer-inner { grid-template-columns: 1fr; }
+            .ez-fbottom { flex-direction: column; text-align: center; }
+            .ez-app-mockup { width: 260px; height: 460px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="ez-wrap">
+
+    <!-- NAV -->
+    <nav class="ez-nav" id="ezNav">
+        <div class="ez-nav-inner">
+            <a href="eurozuca.html" class="ez-logo">
+                <span class="ez-logo-icon"><i class="fas fa-compass"></i></span>
+                <span>eurozuca.com<span class="ez-logo-sub">Plataforma da Comunidade</span></span>
+            </a>
+            <ul class="ez-nav-links">
+                <li><a href="#empresas">Empresas</a></li>
+                <li><a href="#categorias">Categorias</a></li>
+                <li><a href="#planos">Planos</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+            <div class="ez-nav-actions">
+                <a href="eurozuca.html" class="ez-btn ez-btn-outline ez-btn-sm"><i class="fas fa-arrow-left"></i> Serviços</a>
+                <button class="ez-btn ez-btn-green ez-btn-sm"><i class="fas fa-user-plus"></i> Criar Conta</button>
+            </div>
+            <button class="ez-menu-btn" onclick="ezToggleMenu()" aria-label="Menu"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+    <div class="ez-overlay" id="ezOverlay" onclick="ezToggleMenu()"></div>
+    <div class="ez-mobile-menu" id="ezMobileMenu">
+        <button onclick="ezToggleMenu()" style="position:absolute;top:1.2rem;right:1.2rem;background:none;border:none;font-size:1.4rem;cursor:pointer;"><i class="fas fa-times"></i></button>
+        <a href="#empresas" onclick="ezToggleMenu()">Empresas</a>
+        <a href="#categorias" onclick="ezToggleMenu()">Categorias</a>
+        <a href="#planos" onclick="ezToggleMenu()">Planos</a>
+        <a href="eurozuca.html" onclick="ezToggleMenu()"><i class="fas fa-arrow-left"></i> Voltar aos Serviços</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="ez-hero">
+        <div class="ez-hero-inner">
+            <div class="ez-badge"><i class="fas fa-sparkles"></i> A maior plataforma da comunidade brasileira na Europa</div>
+            <h1><span class="line1">Encontre tudo o que precisa</span><br><span class="line2">como brasileiro na Europa</span></h1>
+            <p>Empresas, profissionais e serviços para a comunidade brasileira. Pesquise, agende, avalie e conecte-se — tudo numa só plataforma.</p>
+
+            <div class="ez-search-wrap">
+                <div class="ez-search-box">
+                    <div class="ez-search-input-wrap">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="O que procura? Ex: advogado, restaurante...">
+                    </div>
+                    <select class="ez-search-select">
+                        <option>Todas as cidades</option>
+                        <option>Lisboa</option>
+                        <option>Porto</option>
+                        <option>Faro</option>
+                        <option>Braga</option>
+                        <option>Coimbra</option>
+                    </select>
+                    <button class="ez-search-btn"><i class="fas fa-search"></i> Pesquisar</button>
+                </div>
+                <div class="ez-tags">
+                    <button class="ez-tag" onclick="fillSearch('Restaurantes')">Restaurantes</button>
+                    <button class="ez-tag" onclick="fillSearch('Advogados')">Advogados</button>
+                    <button class="ez-tag" onclick="fillSearch('Imobiliária')">Imobiliária</button>
+                    <button class="ez-tag" onclick="fillSearch('Saúde')">Saúde</button>
+                    <button class="ez-tag" onclick="fillSearch('Mercadorias')">Mercadorias</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section style="padding: 2.5rem 0 1rem;">
+        <div class="ez-stats">
+            <div class="ez-stat"><div class="ez-stat-icon"><i class="fas fa-building"></i></div><div><div class="ez-stat-num">1.200+</div><div class="ez-stat-label">Empresas registadas</div></div></div>
+            <div class="ez-stat"><div class="ez-stat-icon"><i class="fas fa-users"></i></div><div><div class="ez-stat-num">85.000+</div><div class="ez-stat-label">Utilizadores ativos</div></div></div>
+            <div class="ez-stat"><div class="ez-stat-icon"><i class="fas fa-globe"></i></div><div><div class="ez-stat-num">47</div><div class="ez-stat-label">Cidades cobertas</div></div></div>
+            <div class="ez-stat"><div class="ez-stat-icon"><i class="fas fa-calendar-check"></i></div><div><div class="ez-stat-num">12.000+</div><div class="ez-stat-label">Agendamentos/mês</div></div></div>
+        </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="ez-section" id="categorias">
+        <div class="ez-sec-header">
+            <div class="ez-sec-tag">Categorias</div>
+            <h2 class="ez-sec-title">Explore por <span>categorias</span></h2>
+            <p class="ez-sec-sub">Encontre empresas e profissionais em mais de 12 categorias</p>
+        </div>
+        <div class="ez-cards">
+            <div class="ez-card ez-gcard" onclick="fillSearch('Restaurantes')"><div class="ez-cicon g"><i class="fas fa-utensils"></i></div><div><h3>Restaurantes</h3><p>248 empresas</p></div></div>
+            <div class="ez-card ez-gcard" onclick="fillSearch('Advogados')"><div class="ez-cicon y"><i class="fas fa-scale-balanced"></i></div><div><h3>Advogados</h3><p>87 empresas</p></div></div>
+            <div class="ez-card ez-gcard" onclick="fillSearch('Contabilistas')"><div class="ez-cicon b"><i class="fas fa-chart-line"></i></div><div><h3>Contabilistas</h3><p>64 empresas</p></div></div>
+            <div class="ez-card ez-gcard" onclick="fillSearch('Saúde')"><div class="ez-cicon g"><i class="fas fa-heart-pulse"></i></div><div><h3>Saúde</h3><p>132 empresas</p></div></div>
+            <div class="ez-card ez-gcard" onclick="fillSearch('Beleza')"><div class="ez-cicon y"><i class="fas fa-spa"></i></div><div><h3>Beleza</h3><p>189 empresas</p></div></div>
+            <div class="ez-card ez-gcard" onclick="fillSearch('Imobiliária')"><div class="ez-cicon b"><i class="fas fa-house-chimney"></i></div><div><h3>Imobiliária</h3><p>76 empresas</p></div></div>
+            <div class="ez-card ez-gcard" onclick="fillSearch('Educação')"><div class="ez-cicon g"><i class="fas fa-book-open"></i></div><div><h3>Educação</h3><p>54 empresas</p></div></div>
+            <div class="ez-card ez-gcard" onclick="fillSearch('Transportes')"><div class="ez-cicon y"><i class="fas fa-truck"></i></div><div><h3>Transportes</h3><p>43 empresas</p></div></div>
+            <div class="ez-card ez-gcard" onclick="fillSearch('Mercadorias')"><div class="ez-cicon b"><i class="fas fa-cart-shopping"></i></div><div><h3>Mercadorias</h3><p>98 empresas</p></div></div>
+            <div class="ez-card ez-gcard" onclick="fillSearch('Serviços')"><div class="ez-cicon g"><i class="fas fa-wrench"></i></div><div><h3>Serviços</h3><p>156 empresas</p></div></div>
+            <div class="ez-card ez-gcard" onclick="fillSearch('Eventos')"><div class="ez-cicon y"><i class="fas fa-champagne-glasses"></i></div><div><h3>Eventos</h3><p>67 empresas</p></div></div>
+            <div class="ez-card ez-gcard" onclick="fillSearch('Tecnologia')"><div class="ez-cicon b"><i class="fas fa-laptop-code"></i></div><div><h3>Tecnologia</h3><p>45 empresas</p></div></div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="ez-section ez-bg-gray">
+        <div class="ez-sec-header">
+            <div class="ez-sec-tag">Como funciona</div>
+            <h2 class="ez-sec-title">Simples, <span>rápido</span> e eficiente</h2>
+            <p class="ez-sec-sub">Encontre o que precisa em 3 passos simples</p>
+        </div>
+        <div class="ez-steps">
+            <div class="ez-step"><div class="ez-step-icon-wrap" data-num="1"><i class="fas fa-search"></i></div><h4>Pesquise</h4><p>Procure por categoria, cidade ou palavra-chave. Use filtros avançados para resultados precisos.</p></div>
+            <div class="ez-step"><div class="ez-step-icon-wrap" data-num="2"><i class="fas fa-calendar-check"></i></div><h4>Agende</h4><p>Marque serviços diretamente com as empresas. Receba lembretes e sincronize com o seu calendário.</p></div>
+            <div class="ez-step"><div class="ez-step-icon-wrap" data-num="3"><i class="fas fa-star"></i></div><h4>Avalie</h4><p>Partilhe a sua experiência e ajude outros brasileiros a encontrar os melhores serviços.</p></div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="ez-section">
+        <div class="ez-sec-header">
+            <h2 class="ez-sec-title">Tudo o que precisa, <span>num só lugar</span></h2>
+            <p class="ez-sec-sub">Funcionalidades premium pensadas para a comunidade brasileira na Europa</p>
+        </div>
+        <div class="ez-features">
+            <div class="ez-feature ez-gcard"><div class="ez-cicon g"><i class="fas fa-magnifying-glass-chart"></i></div><h4>Marketplace Inteligente</h4><p>Pesquise empresas por cidade, categoria, avaliação e mais. Filtros avançados para encontrar exatamente o que precisa.</p></div>
+            <div class="ez-feature ez-gcard"><div class="ez-cicon y"><i class="fas fa-calendar-days"></i></div><h4>Agendamento Online</h4><p>Marque consultas e serviços diretamente na plataforma. Lembretes automáticos e sincronização com calendário.</p></div>
+            <div class="ez-feature ez-gcard"><div class="ez-cicon b"><i class="fas fa-comments"></i></div><h4>Chat em Tempo Real</h4><p>Comunique diretamente com empresas. Envie texto, imagens, documentos e partilhe a sua localização.</p></div>
+            <div class="ez-feature ez-gcard"><div class="ez-cicon g"><i class="fas fa-star-half-stroke"></i></div><h4>Avaliações Verificadas</h4><p>Sistema de avaliações como o Google. Notas, comentários, fotos e respostas das empresas.</p></div>
+            <div class="ez-feature ez-gcard"><div class="ez-cicon y"><i class="fas fa-credit-card"></i></div><h4>Pagamentos Seguros</h4><p>Stripe, MB Way, Multibanco, Apple Pay, Google Pay e PIX. Transações protegidas e faturas automáticas.</p></div>
+            <div class="ez-feature ez-gcard"><div class="ez-cicon b"><i class="fas fa-chart-column"></i></div><h4>Dashboard Analítico</h4><p>Empresas acompanham receita, clientes, conversões e crescimento em tempo real.</p></div>
+            <div class="ez-feature ez-gcard"><div class="ez-cicon g"><i class="fas fa-bell"></i></div><h4>Notificações</h4><p>Receba alertas de promoções, agendamentos, mensagens e novidades da comunidade.</p></div>
+            <div class="ez-feature ez-gcard"><div class="ez-cicon y"><i class="fas fa-wallet"></i></div><h4>Carteira Digital</h4><p>Salde serviços, acumule pontos e use cupons de desconto tudo numa só carteira.</p></div>
+            <div class="ez-feature ez-gcard"><div class="ez-cicon b"><i class="fas fa-shield-halved"></i></div><h4>Segurança e Privacidade</h4><p>JWT, OAuth, 2FA, encriptação. Cumprimos RGPD e LGPD para proteger os seus dados.</p></div>
+        </div>
+    </section>
+
+    <!-- BUSINESSES -->
+    <section class="ez-section ez-bg-gray" id="empresas">
+        <div class="ez-biz-header">
+            <div><div class="ez-sec-tag">Empresas em destaque</div><h2>Negócios de confiança</h2></div>
+            <a href="#">Ver todas <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="ez-biz-grid">
+            <div class="ez-biz-card ez-gcard">
+                <div class="ez-biz-img" style="background-image:url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop')">
+                    <div class="ez-biz-badges"><div class="ez-biz-badge"><i class="fas fa-check"></i> Verificado</div><div class="ez-biz-badge"><i class="fas fa-star"></i> 4.8</div></div>
+                </div>
+                <div class="ez-biz-info"><div class="ez-biz-cat">Restaurantes</div><div class="ez-biz-name">Casa do Brasil Restaurante</div></div>
+            </div>
+            <div class="ez-biz-card ez-gcard">
+                <div class="ez-biz-img" style="background-image:url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=300&fit=crop')">
+                    <div class="ez-biz-badges"><div class="ez-biz-badge"><i class="fas fa-check"></i> Verificado</div><div class="ez-biz-badge"><i class="fas fa-star"></i> 4.9</div></div>
+                </div>
+                <div class="ez-biz-info"><div class="ez-biz-cat">Advogados</div><div class="ez-biz-name">Advocacia Silva &amp; Associados</div></div>
+            </div>
+            <div class="ez-biz-card ez-gcard">
+                <div class="ez-biz-img" style="background-image:url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop')">
+                    <div class="ez-biz-badges"><div class="ez-biz-badge"><i class="fas fa-check"></i> Verificado</div><div class="ez-biz-badge"><i class="fas fa-star"></i> 4.6</div></div>
+                </div>
+                <div class="ez-biz-info"><div class="ez-biz-cat">Imobiliária</div><div class="ez-biz-name">Luso Brasil Imobiliária</div></div>
+            </div>
+            <div class="ez-biz-card ez-gcard">
+                <div class="ez-biz-img" style="background-image:url('https://images.unsplash.com/photo-1534723452862-4c874018d66d?w=400&h=300&fit=crop')">
+                    <div class="ez-biz-badges"><div class="ez-biz-badge"><i class="fas fa-check"></i> Verificado</div><div class="ez-biz-badge"><i class="fas fa-star"></i> 4.5</div></div>
+                </div>
+                <div class="ez-biz-info"><div class="ez-biz-cat">Mercadorias</div><div class="ez-biz-name">Mercado Brasil Online</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="ez-section">
+        <div class="ez-sec-header">
+            <div class="ez-sec-tag">Depoimentos</div>
+            <h2 class="ez-sec-title">O que dizem os <span>nossos utilizadores</span></h2>
+        </div>
+        <div class="ez-testis">
+            <div class="ez-testi ez-gcard">
+                <div class="ez-testi-quote">&ldquo;</div>
+                <p class="ez-testi-text">O Eurozuca mudou completamente a minha experiência em Portugal. Encontrei um advogado para o meu visto, um apartamento e até o meu restaurante brasileiro favorito. Tudo num só lugar!</p>
+                <div class="ez-testi-author"><div class="ez-testi-avatar">MC</div><div><div class="ez-testi-name">Marina Costa</div><div class="ez-testi-role">Mudou-se de São Paulo para Lisboa</div><div class="ez-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div></div>
+            </div>
+            <div class="ez-testi ez-gcard">
+                <div class="ez-testi-quote">&ldquo;</div>
+                <p class="ez-testi-text">Como dono de uma pequena empresa, o painel administrativo da plataforma ajudou-me a gerir clientes, agendamentos e pagamentos de forma profissional. Recomendo a todos os empresários brasileiros.</p>
+                <div class="ez-testi-author"><div class="ez-testi-avatar">RO</div><div><div class="ez-testi-name">Rafael Oliveira</div><div class="ez-testi-role">Empreendedor no Porto</div><div class="ez-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div></div>
+            </div>
+            <div class="ez-testi ez-gcard">
+                <div class="ez-testi-quote">&ldquo;</div>
+                <p class="ez-testi-text">Encontrei uma clínica médica com médicos brasileiros, salão de beleza e mercado de produtos brasileiros. A plataforma tem tudo que um brasileiro precisa em Portugal.</p>
+                <div class="ez-testi-author"><div class="ez-testi-avatar">JF</div><div><div class="ez-testi-name">Juliana Ferreira</div><div class="ez-testi-role">Estudante de Medicina em Coimbra</div><div class="ez-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- APP -->
+    <section class="ez-section ez-bg-gray">
+        <div class="ez-app">
+            <div class="ez-app-left">
+                <div class="ez-sec-tag">Aplicação Móvel</div>
+                <h2 class="ez-sec-title">Eurozuca na <span>palma da sua mão</span></h2>
+                <p>A nossa aplicação móvel para Android e iOS está em desenvolvimento. Entretanto, o site é totalmente otimizado para mobile com experiência de app.</p>
+                <div class="ez-app-list">
+                    <div class="ez-app-item"><div class="ez-app-item-icon"><i class="fas fa-earth-americas"></i></div>Funciona em todo o território português</div>
+                    <div class="ez-app-item"><div class="ez-app-item-icon"><i class="fas fa-mobile-screen"></i></div>Design responsivo com experiência de aplicação</div>
+                    <div class="ez-app-item"><div class="ez-app-item-icon"><i class="fas fa-bell"></i></div>Notificações push de promoções e agendamentos</div>
+                    <div class="ez-app-item"><div class="ez-app-item-icon"><i class="fas fa-lock"></i></div>Pagamentos seguros e dados protegidos</div>
+                </div>
+            </div>
+            <div class="ez-app-mockup">
+                <div class="ez-app-mockup-notch"></div>
+                <div style="color:rgba(255,255,255,.6);font-size:.7rem;margin-bottom:.3rem;position:relative;z-index:1;">9:41</div>
+                <h4>Olá, Marina!</h4>
+                <div class="sub">O que procura hoje?</div>
+                <div class="ez-app-mockup-item"><span><i class="fas fa-utensils"></i> Restaurantes</span><i class="fas fa-chevron-right"></i></div>
+                <div class="ez-app-mockup-item"><span><i class="fas fa-scale-balanced"></i> Advogados</span><i class="fas fa-chevron-right"></i></div>
+                <div class="ez-app-mockup-item"><span><i class="fas fa-house-chimney"></i> Imobiliária</span><i class="fas fa-chevron-right"></i></div>
+                <div class="ez-app-mockup-item"><span><i class="fas fa-spa"></i> Beleza</span><i class="fas fa-chevron-right"></i></div>
+                <div class="ez-app-promo"><div class="ez-app-promo-label"><i class="fas fa-arrow-trend-up"></i> Promoção</div><div class="ez-app-promo-text">Happy Hour: Caipirinhas 2×1</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="ez-section" id="planos">
+        <div class="ez-sec-header">
+            <h2 class="ez-sec-title">Planos e <span>Preços</span></h2>
+            <p class="ez-sec-sub">Para utilizadores é grátis. Para empresas, escolha o plano que melhor se adequa ao seu negócio.</p>
+        </div>
+        <div class="ez-pricing">
+            <div class="ez-price-card ez-gcard">
+                <div class="ez-price-name">Grátis</div>
+                <div class="ez-price-desc">Para utilizadores que procuram serviços</div>
+                <div class="ez-price">&euro;0<span> para sempre</span></div>
+                <button class="ez-btn ez-btn-outline ez-price-btn">Começar Grátis</button>
+                <div class="ez-price-features">
+                    <div class="ez-price-feature"><i class="fas fa-check"></i> Pesquisa de empresas ilimitada</div>
+                    <div class="ez-price-feature"><i class="fas fa-check"></i> Favoritos e histórico</div>
+                    <div class="ez-price-feature"><i class="fas fa-check"></i> Avaliações e comentários</div>
+                </div>
+            </div>
+            <div class="ez-price-card ez-gcard popular">
+                <div class="ez-popular-badge"><i class="fas fa-thumbtack"></i> Mais popular</div>
+                <div class="ez-price-name">Empresa</div>
+                <div class="ez-price-desc">Para empresas e profissionais</div>
+                <div class="ez-price">&euro;29<span>/mês</span></div>
+                <button class="ez-btn ez-btn-green ez-price-btn">Experimentar 14 dias grátis</button>
+                <div class="ez-price-features">
+                    <div class="ez-price-feature"><i class="fas fa-check"></i> Perfil empresarial completo</div>
+                    <div class="ez-price-feature"><i class="fas fa-check"></i> Galeria de fotos e vídeos</div>
+                    <div class="ez-price-feature"><i class="fas fa-check"></i> Sistema de agendamento</div>
+                </div>
+            </div>
+            <div class="ez-price-card ez-gcard">
+                <div class="ez-price-name">Premium</div>
+                <div class="ez-price-desc">Para empresas em crescimento</div>
+                <div class="ez-price">&euro;79<span>/mês</span></div>
+                <button class="ez-btn ez-btn-outline ez-price-btn">Falar com vendas</button>
+                <div class="ez-price-features">
+                    <div class="ez-price-feature"><i class="fas fa-check"></i> Tudo do plano Empresa</div>
+                    <div class="ez-price-feature"><i class="fas fa-check"></i> Posicionamento prioritário</div>
+                    <div class="ez-price-feature"><i class="fas fa-check"></i> Dashboard analítico avançado</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="ez-cta-sec">
+        <div class="ez-cta-box2">
+            <h2>Junte-se à maior comunidade<br>brasileira em Portugal</h2>
+            <p>Crie a sua conta gratuita hoje e descubra tudo o que o Eurozuca tem para oferecer.</p>
+            <div class="ez-cta-btns">
+                <button class="ez-btn ez-btn-white">Criar conta grátis <i class="fas fa-arrow-right"></i></button>
+                <button class="ez-btn ez-btn-glass">Registar a minha empresa</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="ez-footer" id="contato">
+        <div class="ez-footer-inner">
+            <div class="ez-footer-brand">
+                <a href="#" class="ez-logo">
+                    <span class="ez-logo-icon"><i class="fas fa-compass"></i></span>
+                    <span>eurozuca.com<span class="ez-logo-sub">Plataforma da Comunidade</span></span>
+                </a>
+                <p>A maior plataforma da comunidade brasileira na Europa. Encontre empresas, serviços e profissionais.</p>
+                <div class="ez-footer-socials">
+                    <a href="https://www.instagram.com/eurozuca/" target="_blank" class="ez-footer-social" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=100094639210572" target="_blank" class="ez-footer-social" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@eurozucas" target="_blank" class="ez-footer-social" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://wa.me/351936907137" target="_blank" class="ez-footer-social" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="ez-fcol">
+                <h4>Plataforma</h4>
+                <a href="#empresas">Empresas</a>
+                <a href="#categorias">Categorias</a>
+                <a href="#planos">Planos</a>
+                <a href="#">Blog</a>
+            </div>
+            <div class="ez-fcol">
+                <h4>Empresa</h4>
+                <a href="#">Sobre Nós</a>
+                <a href="#planos">Planos</a>
+                <a href="#">Roadmap</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="ez-fcol">
+                <h4>Contacto</h4>
+                <div class="ez-footer-contact">
+                    <div class="ez-footer-contact-item"><i class="fas fa-phone"></i> +351 936 907 137</div>
+                    <div class="ez-footer-contact-item"><i class="fas fa-envelope"></i> eurozucas@gmail.com</div>
+                    <div class="ez-footer-contact-item"><i class="fas fa-location-dot"></i> Vila Nova de Gaia, Portugal</div>
+                </div>
+            </div>
+        </div>
+        <div class="ez-fbottom">
+            <p>Todos direitos 2026 &copy; eurozuca.com</p>
+            <p>Feito com dedicação para a comunidade brasileira <i class="fas fa-heart" style="color:var(--gold)"></i></p>
+        </div>
+    </footer>
+
+</div><!-- /ez-wrap -->
+
+<a href="https://wa.me/351936907137" target="_blank" class="ez-wa"><i class="fab fa-whatsapp"></i> Resposta em minutos</a>
+
+<script>
+// ===== NAV SCROLL =====
+window.addEventListener('scroll', function() {
+    document.getElementById('ezNav').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ===== MOBILE MENU =====
+function ezToggleMenu() {
+    document.getElementById('ezMobileMenu').classList.toggle('open');
+    document.getElementById('ezOverlay').classList.toggle('active');
+}
+
+// ===== SEARCH =====
+function fillSearch(text) {
+    document.getElementById('searchInput').value = text;
+    document.getElementById('searchInput').focus();
+}
+
+// ===== SCROLL ANIMATIONS =====
+var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+        if (e.isIntersecting) e.target.style.opacity = '1';
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.ez-card, .ez-feature, .ez-testi, .ez-price-card, .ez-biz-card, .ez-stat').forEach(function(el) {
+    el.style.opacity = '0';
+    el.style.transition = 'opacity 0.6s ease';
+    obs.observe(el);
+});
+</script>
+
+</body>
+</html>
