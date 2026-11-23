@@ -1,0 +1,33 @@
+{
+  "appId": "com.eurozuca.app",
+  "appName": "Eurozuca",
+  "webDir": "www",
+  "server": {
+    "url": "https://eurozuca-comunidade1.vercel.app",
+    "cleartext": false,
+    "errorPath": "offline.html"
+  },
+  "appendUserAgent": "EurozucaApp/1.0",
+  "backgroundColor": "#ffffff",
+  "android": {
+    "adjustMarginsForEdgeToEdge": "auto",
+    "allowMixedContent": false
+  },
+  "ios": {
+    "contentInset": "always",
+    "limitsNavigationsToAppBoundDomains": false
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1200,
+      "launchAutoHide": true,
+      "backgroundColor": "#ffffff",
+      "showSpinner": false
+    },
+    "StatusBar": {
+      "style": "LIGHT",
+      "backgroundColor": "#ffffff",
+      "overlaysWebView": false
+    }
+  }
+}
