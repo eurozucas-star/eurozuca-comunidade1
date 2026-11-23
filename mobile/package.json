@@ -1,0 +1,23 @@
+{
+  "name": "eurozuca-app",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "sync": "cap sync",
+    "icons": "capacitor-assets generate --iconBackgroundColor '#00a651' --iconBackgroundColorDark '#087142' --splashBackgroundColor '#ffffff' --splashBackgroundColorDark '#0b1a12'",
+    "android": "cap open android",
+    "ios": "cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.0",
+    "@capacitor/app": "^7.0.0",
+    "@capacitor/core": "^7.4.0",
+    "@capacitor/ios": "^7.4.0",
+    "@capacitor/splash-screen": "^7.0.0",
+    "@capacitor/status-bar": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^7.4.0"
+  }
+}

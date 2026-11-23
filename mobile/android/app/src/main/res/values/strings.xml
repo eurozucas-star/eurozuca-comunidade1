@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Eurozuca</string>
+    <string name="title_activity_main">Eurozuca</string>
+    <string name="package_name">com.eurozuca.app</string>
+    <string name="custom_url_scheme">com.eurozuca.app</string>
+</resources>
